@@ -1,0 +1,9 @@
+{
+"form_name": "name",
+"form_desc": "desc",
+"fields": 
+    [
+        {"field_type": "radio", "field_name": "name1"},
+        {"field_type": "text_input", "field_name": "name2"}
+    ]
+}
