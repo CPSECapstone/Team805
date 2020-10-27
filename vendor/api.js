@@ -13,7 +13,7 @@ let session = false;
 let records = [];
 
 // User submits a form
-app.post('/submit', jsonParser, (req, res) => {
+app.post('/form', jsonParser, (req, res) => {
 
     // User must be logged in to submit a form
     if (!session) {
@@ -34,17 +34,27 @@ app.post('/submit', jsonParser, (req, res) => {
     res.json(records);
 });
 
-// User accesses a form
+// User logs into a form
 app.post('/login', jsonParser, (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
     if (username && password) {
-        res.json(jsonData);
+        res.status(200).send();
         session = true;
     }
     else {
         res.status(400).send("Login missing username or password")
     }
-})
+});
+
+// Cloud haven asks for form schema
+app.get('/form', (req, res) => {
+    // User must be logged in to access a form
+    if (!session) {
+        res.status(400).send("User must be logged in!");
+        return;
+    }
+    res.json(jsonData);
+});
 
 app.listen(port, () => console.log(`Vendor api listening on port ${port}!`));
