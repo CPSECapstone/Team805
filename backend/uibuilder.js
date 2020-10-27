@@ -27,6 +27,10 @@ class Form {
     this.formDesc = formDesc;
     this.fields = fields;
   }
+
+  numFields() {
+    return this.fields.length;
+  }
 }
 
 class Field {
