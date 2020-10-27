@@ -1,9 +1,9 @@
 import TextField from '@material-ui/core/TextField';
-import React from "react";
+import React from 'react';
 
 const InputField = ({ ...props }) => (
-   <div> 
-    <TextField {...props} />  
+  <div>
+    <TextField {...props} />
   </div>
 );
 
