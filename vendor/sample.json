@@ -1,9 +1,8 @@
 {
-"form_name": "name",
-"form_desc": "desc",
-"fields": 
-    [
-        {"field_type": "radio", "field_name": "name1"},
-        {"field_type": "text_input", "field_name": "name2"}
-    ]
+	"form_name": "Form Example 1", 
+	"form_desc": "This is a test form for Sprint 2",
+	"fields": [{"field_type": "radio", "field_name": "radio1"},
+              {"field_type": "text_input", "field_name": "first_name"},
+              {"field_type": "text_input", "field_name": "last_name"},
+              {"field_type": "email_text_input", "field_name": "email"}]
 }
