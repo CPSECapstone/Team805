@@ -48,4 +48,4 @@ class Field {
   }
 }
 
-module.exports = { loginPost };
+module.exports = { loginPost, getFormData, parseFormData };
