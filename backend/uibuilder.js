@@ -1,7 +1,8 @@
 const axios = require('axios');
+const https = require('https');
 
-const loginPost = (userToken, passToken) => {
-  axios.post("http://localhost:5000/login", 
+const loginPost = async (userToken, passToken) => {
+  return axios.post("http://localhost:5000/login", 
   {
     username: userToken,
     password: passToken,
@@ -9,6 +10,7 @@ const loginPost = (userToken, passToken) => {
   .then(post_res => {
     console.log(post_res.status);
     console.log("User " + userToken + " successfully logged in.");
+    return post_res.status;
   })
   .catch(err => {
     console.log(err);
@@ -16,9 +18,13 @@ const loginPost = (userToken, passToken) => {
   });
 }
 
-const getFormData = async() => {
-  const response = await fetch('http://localhost:5000/form');
-  return await response.json();
+const getFormData = async () => {
+  return axios.get('http://localhost:5000/form')
+  .then(response => {
+    return response;
+  })
+  .catch(error =>
+    console.log(error));
 }
 
 const parseFormData = (formData) => {

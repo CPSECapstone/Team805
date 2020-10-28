@@ -1,14 +1,21 @@
 const uibuilder = require('./uibuilder');
 
-const sampleRunThrough = () => {
+const sampleRunThrough = async () => {
   //login stuff from nathan
-  uibuilder.loginPost('testUser', 'testPass');
-
-  let formObj = uibuilder.parseFormData(uibuilder.getFormData());
-  console.log('formObj');
-  //rendering -> react
-
-  //submit stuff from Miko
+  const res = await uibuilder.loginPost('testUser', 'testPass');
+  // console.log(res);
+  
+  if (res !== 200) {
+    console.log("Error logging into sample flow");
+    return;
+  }
+  const formRes = await uibuilder.getFormData();
+  
+  if (formRes.status !== 200) {
+    console.log("Error getting form data");
+  }
+  
+  console.log(uibuilder.parseFormData(formRes.data));
 }
 
 sampleRunThrough();
