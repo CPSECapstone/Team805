@@ -9,7 +9,7 @@ const RadioButton = ({ ...props }) => (
     <RadioGroup {...props} >
       <FormControlLabel value="female" control={<Radio />} label="Female" />
       <FormControlLabel value="male" control={<Radio />} label="Male" />
-      <FormControlLabel value="nonBinary" control={<Radio />} label="Non Binary" />
+      <FormControlLabel value="nonBinary" control={<Radio />} label="Non-Binary" />
     </RadioGroup>  
   </div>
 );

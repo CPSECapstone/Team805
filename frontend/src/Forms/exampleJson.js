@@ -1,4 +1,4 @@
-import InputField from './TextField.js';
+import InputField from './InputField.js';
 import RadioButton from './RadioButton.js';
 
 export const getJson = ({ state, onChange }) => {
@@ -9,15 +9,16 @@ export const getJson = ({ state, onChange }) => {
       label: "First Name",
       component: InputField,
       value: state["firstName"],
-      onChange: onChange("firstlName"),
+      onChange: onChange("firstName"),
     },
     {
-        name: "lastName",
-        label: "Last Name",
-        component: InputField,
-        value: state["lastName"],
-        onChange: onChange("lastlName"),
-      },
+      name: "lastName",
+      type: "text",
+      label: "Last Name",
+      component: InputField,
+      value: state["lastName"],
+      onChange: onChange("lastName"),
+    },
     {  
       name: "email",
       type: "email",

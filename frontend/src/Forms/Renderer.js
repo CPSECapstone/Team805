@@ -1,4 +1,3 @@
-// Renderer.js
 import React, { Fragment } from "react";
 
 const mapPropsToConfig = config => {

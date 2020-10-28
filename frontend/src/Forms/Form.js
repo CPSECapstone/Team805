@@ -15,11 +15,12 @@ export const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('state', state);
+    alert(`A form was submitted: \n${state.firstName}\n${+state.lastName}\n${state.email}\n${state.password}\n${state.gender}`);
   };
 
   const handleOnChange = field => event => {
     const { value } = event.target; 
+    console.log(event.target);
     setState(prevState => ({  ...prevState,  [field]: value  }));
   };
 
