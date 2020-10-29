@@ -1,6 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,6 +11,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * It returns a form div (just trying out MaterialUI)
+ * @return {div}
+ */
 function App() {
   const classes = useStyles();
 
@@ -41,7 +45,7 @@ function App() {
           label="Last Name"
           variant="outlined"
         />
-         <TextField
+        <TextField
           required
           id="outlined-required"
           label="Email"
