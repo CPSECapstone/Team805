@@ -2,17 +2,17 @@ import React, {Fragment} from 'react';
 
 const mapPropsToConfig = (config) => {
   const configWithProps = [];
-
   config.forEach((item) => {
-    if (item.component) {
-      const {component, ...props} = item;
-      configWithProps.push({
-        ...props,
-        Component: component,
-      });
-    }
+    item.fields.forEach((field) => {
+      if (field.component) {
+        const {component, ...props} = field;
+        configWithProps.push({
+          ...props,
+          Component: component,
+        });
+      }
+    });
   });
-
   return configWithProps;
 };
 
