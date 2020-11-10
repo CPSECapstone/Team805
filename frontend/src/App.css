@@ -2,6 +2,26 @@
   text-align: center;
 }
 
+.Fields {
+  align-items: center;
+  flex-direction: column;
+  display: flex;
+}
+
+.FormTitle {
+  margin-bottom: 5px;
+  color: black;
+}
+
+.FormDesc {
+  margin-bottom: 20px;
+}
+
+.RadioButton {
+  max-width: 120px;
+  margin: 0 auto;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
