@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import * as uibuilder from './uibuilder';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App 
+      loginPost={uibuilder.loginPost}
+      getFormData={uibuilder.getFormData}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
