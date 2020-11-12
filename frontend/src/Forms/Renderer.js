@@ -22,6 +22,8 @@ const mapPropsToConfig = (config, handleOnChange) => {
       const {name, type, ...props} = field;
       configWithProps.push({
         ...props,
+        name: name,
+        type: type,
         Component: getType(type),
         onChange: handleOnChange(name),
       });
