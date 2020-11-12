@@ -1,4 +1,19 @@
 import React, {Fragment} from 'react';
+import InputField from './InputField.js';
+import RadioButton from './RadioButton.js';
+
+/**
+ * returns the type
+ * @param {*} name
+ * @return {*} InputType
+ */
+function getType(name) {
+  if (name == 'InputField') {
+    return InputField;
+  } else if (name == 'RadioButton') {
+    return RadioButton;
+  }
+};
 
 const mapPropsToConfig = (config, handleOnChange) => {
   const configWithProps = [];
@@ -8,7 +23,7 @@ const mapPropsToConfig = (config, handleOnChange) => {
         const {component, onChange, ...props} = field;
         configWithProps.push({
           ...props,
-          Component: component,
+          Component: getType(component),
           onChange: handleOnChange(onChange),
         });
       }
