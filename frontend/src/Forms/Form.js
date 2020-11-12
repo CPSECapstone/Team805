@@ -13,20 +13,20 @@ export const Form = () => {
     gender: '',
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`A form was submitted: \n${state.firstName}\n${+state.lastName}
-    \n${state.email}\n${state.password}\n${state.gender}`);
-  };
-
   const handleOnChange = (field) => (event) => {
     const {value} = event.target;
     console.log(event.target);
     setState((prevState) => ({...prevState, [field]: value}));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(`A form was submitted: \n${state.firstName}\n${+state.lastName}
+    \n${state.email}\n${state.password}\n${state.gender}`);
+  };
+
   const config = useMemo(() => {
-    return getJson({state, onChange: handleOnChange});
+    return getJson();
   }, [state]);
 
   return (
@@ -40,7 +40,7 @@ export const Form = () => {
     >
       <Grid item xs={12}>
         <form onSubmit={handleSubmit}>
-          <Renderer config={config} />
+          <Renderer config={config} handleOnChange={handleOnChange}/>
           <Button type="submit" variant="contained">Submit</Button>
         </form>
       </Grid>
