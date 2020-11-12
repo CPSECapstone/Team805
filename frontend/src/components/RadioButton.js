@@ -1,26 +1,36 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Radio, 
   RadioGroup, 
   FormLabel,
   FormControlLabel} from '@material-ui/core';
 
-function RadioButton(props) {
-  const [value, setValue] = React.useState('Option 1');
+class RadioButton extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      value: "Option 1",
+    }
 
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-  return (
-    <div className="RadioButton">
-      <FormLabel component="legend">{props.label}</FormLabel>
-      <RadioGroup name={props.name} value={value} onChange={handleChange}>
-        <FormControlLabel value="Option 1" control={<Radio />} name="option1" label="Option 1"/>
-        <FormControlLabel value="Option 2" control={<Radio />} name="option2" label="Option 2"/>
-        <FormControlLabel value="Option 3" control={<Radio />} name="option3" label="Option 3"/>
-      </RadioGroup>
-    </div>
-  );
+  handleChange(event) {
+    this.setState({value: event.target.value});
+    this.props.onChange(event);
+  }
+
+  render () {
+    return (
+      <div className="RadioButton">
+        <FormLabel component="legend">{this.props.label}</FormLabel>
+        <RadioGroup name={this.props.name} value={this.state.value} onChange={this.handleChange}>
+          <FormControlLabel value="male" control={<Radio />} name="gender" label="Male"/>
+          <FormControlLabel value="female" control={<Radio />} name="gender" label="Female"/>
+          <FormControlLabel value="other" control={<Radio />} name="gender" label="Other"/>
+        </RadioGroup>
+      </div>
+    );
+  }
 }
 
 export default RadioButton;

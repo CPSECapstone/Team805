@@ -17,9 +17,13 @@
   margin-bottom: 20px;
 }
 
+.SubmitButton {
+  padding: 30px;
+}
+
 .RadioButton {
   max-width: 120px;
-  margin: 0 auto;
+  margin-top: 10px;
 }
 
 .App-logo {

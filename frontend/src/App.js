@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Form from './components/Form';
-import { Button } from '@material-ui/core';
+import { Button, Box } from '@material-ui/core';
 import './App.css';
 
 class App extends Component {
@@ -43,6 +43,7 @@ class App extends Component {
     }
     this.setState({formData: res.data});
   }
+
 }
 
 export default App;
