@@ -8,25 +8,23 @@ import RadioButton from './RadioButton.js';
  * @return {*} InputType
  */
 function getType(name) {
-  if (name == 'InputField') {
+  const textFields = ['text', 'email', 'password'];
+  if (textFields.includes(name)) {
     return InputField;
-  } else if (name == 'RadioButton') {
-    return RadioButton;
   }
+  return RadioButton;
 };
 
 const mapPropsToConfig = (config, handleOnChange) => {
   const configWithProps = [];
   config.forEach((item) => {
     item.fields.forEach((field) => {
-      if (field.component) {
-        const {component, onChange, ...props} = field;
-        configWithProps.push({
-          ...props,
-          Component: getType(component),
-          onChange: handleOnChange(onChange),
-        });
-      }
+      const {name, type, ...props} = field;
+      configWithProps.push({
+        ...props,
+        Component: getType(type),
+        onChange: handleOnChange(name),
+      });
     });
   });
   return configWithProps;
