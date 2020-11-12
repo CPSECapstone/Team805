@@ -1,8 +1,37 @@
 {
-	"form_name": "Form Example 1", 
-	"form_desc": "This is a test form for Sprint 2",
-	"fields": [{"field_type": "radio", "label": "radio1"},
-              {"field_type": "text_input", "label": "first_name"},
-              {"field_type": "text_input", "label": "last_name"},
-              {"field_type": "email_text_input", "label": "email"}]
+  "form_name": "Form Example 1",
+  "form_desc": "This is a test form for Sprint 3",
+  "fields": [
+    {
+      "name": "firstName",
+      "type": "text",
+      "label": "First Name",
+      "component": "TextField"
+    },
+    {
+      "name": "lastName",
+      "type": "text",
+      "label": "Last Name",
+      "component": "TextField"
+    },
+    {
+      "name": "email",
+      "type": "email",
+      "label": "Email",
+      "component": "TextField"
+    },
+    {
+      "name": "password",
+      "type": "password",
+      "label": "Password",
+      "component": "TextField"
+    },
+    {
+      "name": "gender",
+      "type": "",
+      "label": "Gender",
+      "component": "RadioButton"
+    }
+  ]
 }
+
