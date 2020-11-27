@@ -24,7 +24,7 @@
     },
     {
       "name": "gender",
-      "type": "",
+      "type": "radio",
       "label": "Gender"
     }
   ]

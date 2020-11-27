@@ -1,35 +1,20 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import InputField from './InputField.js';
 import RadioButton from './RadioButton.js';
 
 /**
- * returns the type
- * @param {*} name
- * @return {*} InputType
+ * Returns component type based on field type
+ * @param {string} type - Given field type
+ * @return {object} - Returns the component type
  */
-function getType(name) {
-  const textFields = ['text', 'email', 'password'];
-  if (textFields.includes(name)) {
-    return InputField;
-  }
-  return RadioButton;
-};
-
-const mapPropsToConfig = (config, handleOnChange) => {
-  const configWithProps = [];
-  config.forEach((item) => {
-    item.fields.forEach((field) => {
-      const {name, type, ...props} = field;
-      configWithProps.push({
-        ...props,
-        name: name,
-        type: type,
-        Component: getType(type),
-        onChange: handleOnChange(name),
-      });
-    });
-  });
-  return configWithProps;
+function getType(type) {
+  const formComponents = {
+    text: InputField,
+    email: InputField,
+    password: InputField,
+    radio: RadioButton,
+  };
+  return formComponents[type];
 };
 
 export const Renderer = ({config, handleOnChange}) => {
@@ -37,19 +22,14 @@ export const Renderer = ({config, handleOnChange}) => {
     throw new Error('You are calling Renderer with no config.');
   }
 
-  const configWithProps = mapPropsToConfig(config, handleOnChange);
-
-  console.log(configWithProps);
-  const renderComponents = (items) => {
-    return items.map((item) => {
-      const {Component, ...props} = item;
+  const renderComponents = (config) => {
+    return config.fields.map((field) => {
+      const Component = getType(field.type);
       return (
-        <Fragment key={props.name}>
-          <Component {...props} />
-        </Fragment>
+        <Component key={field.name} onChange={handleOnChange} {...field} />
       );
     });
   };
 
-  return renderComponents(configWithProps);
+  return renderComponents(config);
 };

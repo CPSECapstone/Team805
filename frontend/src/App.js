@@ -1,68 +1,67 @@
-import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import {makeStyles} from '@material-ui/core/styles';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import Form from './Forms/Form';
+import {Button} from '@material-ui/core';
+import './App.css';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(2),
-      width: '25ch',
-    },
-  },
-}));
+/** Main App Component */
+class App extends Component {
+  /**
+   * @constructor
+   * @param {object} props
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      formData: null,
+    };
 
-/**
- * It returns a form div (just trying out MaterialUI)
- * @return {div}
- */
-function App() {
-  const classes = useStyles();
+    this.sampleFlow = this.sampleFlow.bind(this);
+  }
 
-  return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <div>
-        <TextField required id="standard-required" label="First Name" />
-        <TextField required id="standard-required" label="Last Name" />
-        <TextField required id="standard-required" label="Email" type="email" />
-        <TextField
-          id="standard-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          color="secondary"
-        />
-      </div>
-      <div>
-        <TextField
-          required
-          id="outlined-required"
-          label="First Name"
-          variant="outlined"
-        />
-        <TextField
-          required
-          id="outlined-required"
-          label="Last Name"
-          variant="outlined"
-        />
-        <TextField
-          required
-          id="outlined-required"
-          label="Email"
-          type="email"
-          variant="outlined"
-        />
-        <TextField
-          id="outlined-password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          variant="outlined"
-        />
-      </div>
-    </form>
-  );
+  /**
+   * Renders App based on state information
+   * @return {div} - Returns the fully rendered React app
+   */
+  render() {
+    if (!this.state.formData) {
+      return (
+        <div className="App">
+          <p>CloudHaven Sample Form Flow</p>
+          <Button variant="contained" onClick={this.sampleFlow}>Login</Button>
+        </div>
+      );
+    } else {
+      return (
+        <div className="App">
+          <p>CloudHaven Sample Form Flow</p>
+          <Form config={this.state.formData} />
+        </div>
+      );
+    }
+  }
+
+  /**
+   * Runs through basic flow and sets state accordingly
+   */
+  async sampleFlow() {
+    let res = await this.props.loginPost('testUser', 'testPass');
+    if (res !== 200) {
+      console.log('login failed');
+      return;
+    }
+    res = await this.props.getFormData();
+    if (res.status !== 200) {
+      console.log('get form data failed');
+      return;
+    }
+    this.setState({formData: res.data});
+  }
 }
 
+App.propTypes = {
+  loginPost: PropTypes.func,
+  getFormData: PropTypes.func,
+};
 
 export default App;
