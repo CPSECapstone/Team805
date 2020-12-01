@@ -1,4 +1,12 @@
 # Team805
-## CSC 402-01 2020
-## CloudHaven 
-### cloudhaven.net
+CSC 402-07 CloudHaven
+http://cloudhaven.net
+---
+## Setup:
+`git clone {github link}`
+`npm install` to install npm dependencies
+`cd frontend` and `npm start` to run frontend
+---
+## CI 
+Link to TravisCI:
+
