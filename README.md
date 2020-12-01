@@ -1,7 +1,8 @@
 # Team805
 CSC 402-07 - CloudHaven
 
-CloudHaven is a vendor-neutral "users' platform". It creates better application usability, integration, security and rapid development by extracting/consolodating user data and functionality, seamlessly integrated via UI-as-a-Service.
+CloudHaven is a vendor-neutral "users' platform". It creates better application usability, integration, security, and rapid development by extracting/consolodating user data and functionality, seamlessly integrated via UI-as-a-Service.
+
 http://cloudhaven.net
 
 
