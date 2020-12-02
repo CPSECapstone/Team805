@@ -5,4 +5,4 @@ branches:
     only:
     - main
 script:
-    - chmod +x build_tests.sh && npm run test
+    - chmod +x build_tests.sh && bash ./build_tests.sh
