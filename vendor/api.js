@@ -41,9 +41,13 @@ app.post('/login', jsonParser, (req, res) => {
     if (username && password) {
         res.status(200).send("Login successful");
         session = true;
+        console.log("logged in")
+        return 200;
     }
     else {
         res.status(400).send("Login missing username or password")
+        console.log("failed log in")
+        return 400;
     }
 });
 
