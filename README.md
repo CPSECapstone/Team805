@@ -5,8 +5,9 @@ CloudHaven is a vendor-neutral "users' platform". It creates better application 
 
 http://cloudhaven.net
 
-## Validation Use Case: Doctor gets a new patient
+## Use Case: Doctor gets a new patient
 ![Use Case](https://github.com/CPSECapstone/Team805/blob/main/Sample%20Use%20Case%20Sequence%20Diagram.png)
+Over the course of the quarter we have worked up to validating the following scenario: A doctor recieves a new patient and must add them to their system. The doctor logins into their Cloud Haven system, and creates a new patient record in a registered vendor system. To test this flow yourself you must run the vendor system (the vendor directory), then run cloud haven (the frontend directory).
 
 ## Setup:
 `git clone https://github.com/CPSECapstone/Team805.git`
