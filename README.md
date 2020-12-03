@@ -7,16 +7,21 @@ http://cloudhaven.net
 
 
 ## Setup:
-`git clone {github link}`
+`git clone https://github.com/CPSECapstone/Team805.git`
 
-`npm install` to install npm dependencies
+Run `npm install` in /backend, /vendor, and /frontend to install npm dependencies
 
-`cd frontend` and `npm start` to run frontend
+`cd vendor` and `node api.js` to start mock vendor api
+
+`cd ../frontend` and `npm start` to run frontend
 
 ## Continuous Integration:
 Link to TravisCI:
 
+https://travis-ci.org/github/CPSECapstone/Team805
+
 ## Testing:
+`./build_tests.sh` will run tests on both backend and frontend
 
 ## JIRA:
 http://platinum.cscaws.com:8080/secure/RapidBoard.jspa?rapidView=43&view=planning.nodetail&issueLimit=100 
