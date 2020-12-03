@@ -6,7 +6,7 @@ CloudHaven is a vendor-neutral "users' platform". It creates better application 
 http://cloudhaven.net
 
 ## Validation Use Case: Doctor gets a new patient
-![Use Case]('Sample Use Case Sequence Diagram.png')
+![Use Case](https://github.com/CPSECapstone/Team805/blob/main/Sample%20Use%20Case%20Sequence%20Diagram.png)
 
 ## Setup:
 `git clone https://github.com/CPSECapstone/Team805.git`
