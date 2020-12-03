@@ -12,10 +12,12 @@ http://cloudhaven.net
 Run `npm install` in /backend, /vendor, and /frontend to install npm dependencies
 
 `cd vendor` and `node api.js` to start mock vendor api
+
 `cd ../frontend` and `npm start` to run frontend
 
 ## Continuous Integration:
 Link to TravisCI:
+
 https://travis-ci.org/github/CPSECapstone/Team805
 
 ## Testing:
