@@ -3,11 +3,15 @@ trap "kill 0" EXIT
 
 cd vendor
 npm install
-node api.js &
 cd ../backend
 npm install
+cd ../frontend
+npm install
+
+cd ../vendor
+node api.js &
+cd ../backend
 npm run test
 
 cd ../frontend
-npm install
 npm test -- --watchAll=false
