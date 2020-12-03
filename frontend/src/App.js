@@ -1,67 +1,37 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import Form from './Forms/Form';
-import {Button} from '@material-ui/core';
-import './App.css';
+import SampleFlow from './SampleFlow/SampleFlow';
+import uibuilder from './uibuilder.js';
+import {BrowserRouter, Route} from 'react-router-dom';
+import Login from './Login/Login';
 
 /** Main App Component */
 class App extends Component {
   /**
-   * @constructor
-   * @param {object} props
-   */
-  constructor(props) {
-    super(props);
-    this.state = {
-      formData: null,
-    };
-
-    this.sampleFlow = this.sampleFlow.bind(this);
-  }
-
-  /**
-   * Renders App based on state information
-   * @return {div} - Returns the fully rendered React app
+   *
+   *
+   * @return {*} The main application
+   * @memberof App
    */
   render() {
-    if (!this.state.formData) {
-      return (
-        <div className="App">
-          <p>CloudHaven Sample Form Flow</p>
-          <Button variant="contained" onClick={this.sampleFlow}>Login</Button>
-        </div>
-      );
-    } else {
-      return (
-        <div className="App">
-          <p>CloudHaven Sample Form Flow</p>
-          <Form config={this.state.formData} />
-        </div>
-      );
-    }
-  }
-
-  /**
-   * Runs through basic flow and sets state accordingly
-   */
-  async sampleFlow() {
-    let res = await this.props.loginPost('testUser', 'testPass');
-    if (res !== 200) {
-      console.log('login failed');
-      return;
-    }
-    res = await this.props.getFormData();
-    if (res.status !== 200) {
-      console.log('get form data failed');
-      return;
-    }
-    this.setState({formData: res.data});
+    return (
+      <BrowserRouter>
+        <Route exact path='/' component = {BuiltSampleFlow}/>
+        <Route exact path='/login' component = {Login}/>
+      </BrowserRouter>
+    );
   }
 }
 
-App.propTypes = {
-  loginPost: PropTypes.func,
-  getFormData: PropTypes.func,
+/** Creates a SampleFlow with props passed in.
+ *
+ * @return {*} A SampleFlow component that uses the UI Builder
+ * vendor APIs to generate a form through props.
+ */
+const BuiltSampleFlow = () => {
+  return <SampleFlow
+    loginPost={uibuilder.loginPost}
+    getFormData={uibuilder.getFormData}
+  />;
 };
 
 export default App;
