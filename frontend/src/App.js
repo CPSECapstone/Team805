@@ -35,7 +35,7 @@ class App extends Component {
       return (
         <div className="App">
           <p>CloudHaven Sample Form Flow</p>
-          <Form config={this.state.formData} />
+          <Form config={this.state.formData} formPost={this.props.formPost} />
         </div>
       );
     }
@@ -62,6 +62,7 @@ class App extends Component {
 App.propTypes = {
   loginPost: PropTypes.func,
   getFormData: PropTypes.func,
+  formPost: PropTypes.func,
 };
 
 export default App;

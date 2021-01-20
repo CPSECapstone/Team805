@@ -10,7 +10,7 @@ let jsonParser = bodyParser.json()
 let session = false;
 
 // Track all pushed data
-let records = [];
+let records = {};
 
 // User submits a form
 app.post('/form', jsonParser, (req, res) => {
@@ -20,18 +20,9 @@ app.post('/form', jsonParser, (req, res) => {
         res.status(400).send("User must be logged in!");
         return;
     }
-
-    // Validate schema while building a record
-    let record = {};
-    for (let field of jsonData.fields) { 
-        if (!(field.field_name in req.body)) {
-            res.status(400).send("Submitted data does not match schema");
-            return;
-        }
-        record[field.field_name] = (req.body[field.field_name]);
-    }
-    records.push(record);
-    res.json(records);
+    records[Object.keys(records).length] = req.body;
+    res.send(records);
+    console.log(records);
 });
 
 // User logs into a form

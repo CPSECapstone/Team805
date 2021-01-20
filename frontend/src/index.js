@@ -9,7 +9,8 @@ ReactDOM.render(
     <React.StrictMode>
       <App
         loginPost={uibuilder.loginPost}
-        getFormData={uibuilder.getFormData}/>
+        getFormData={uibuilder.getFormData}
+        formPost={uibuilder.formPost}/>
     </React.StrictMode>,
     document.getElementById('root'),
 );
