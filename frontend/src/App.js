@@ -3,6 +3,7 @@ import SampleFlow from './SampleFlow/SampleFlow';
 import uibuilder from './uibuilder.js';
 import {BrowserRouter, Route} from 'react-router-dom';
 import Login from './Login/Login';
+import Homepage from './Homepage/Homepage';
 
 /** Main App Component */
 class App extends Component {
@@ -15,7 +16,8 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Route exact path='/' component = {BuiltSampleFlow}/>
+        <Route exact path='/' component = {Homepage}/>
+        <Route exact path='/sampleFlow' component = {BuiltSampleFlow}/>
         <Route exact path='/login' component = {Login}/>
       </BrowserRouter>
     );
