@@ -11,6 +11,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.0"
   },
   "scripts": {
@@ -36,5 +37,6 @@
     "eslint": "^7.12.1",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.21.5"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
