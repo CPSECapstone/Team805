@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import SideMenu from './SideMenu.js';
 import TopMenu from './TopMenu.js';
 import Content from './Content.js';
 
@@ -15,7 +14,6 @@ class Homepage extends Component {
     return (
       <div>
         <TopMenu/>
-        <SideMenu/>
         <Content/>
       </div>
     );
