@@ -14,7 +14,7 @@ app.use(cors({
 
 app.use(session({
   // temp secret, will be changed and moved to env file
-  secret: 'Test',
+  secret: 'foobar',
   resave: false,
   saveUninitialized: false,
 }));
@@ -44,11 +44,31 @@ initializePassport(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.post('/login',
-    passport.authenticate('local'),
-    (req, res) => {
-      console.log(req.body);
-      res.redirect('/');
+app.post(
+    '/login',
+    async (req, res, next) => {
+      passport.authenticate(
+          'local',
+          async (err, user, info) => {
+            console.log(req.body);
+            try {
+              if (err || !user) {
+                const error = new Error('An error occured');
+                return next(error);
+              }
+            } catch (error) {
+              return next(error);
+            }
+            req.login(
+                user,
+                {session: true},
+                async (error) => {
+                  if (error) return next(error);
+                  return res.json({status: 'success'});
+                },
+            );
+          },
+      )(req, res, next);
     },
 );
 

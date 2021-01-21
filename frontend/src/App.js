@@ -3,6 +3,9 @@ import SampleFlow from './SampleFlow/SampleFlow';
 import uibuilder from './uibuilder.js';
 import {BrowserRouter, Route} from 'react-router-dom';
 import Login from './Login/Login';
+import Home from './Home/home';
+import PrivateRoute from './CustomRoutes/PrivateRoute';
+import PublicRoute from './CustomRoutes/PublicRoute';
 
 /** Main App Component */
 class App extends Component {
@@ -15,12 +18,19 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Route exact path='/' component = {BuiltSampleFlow}/>
-        <Route exact path='/login' component = {Login}/>
+        <Route exact path='/' component = {Home}/>
+        <PrivateRoute path='/sampleflow' component = {BuiltSampleFlow}/>
+        <PublicRoute restricted={true} exact path='/login' component={Login}/>
+        <PublicRoute restricted={false} exact path='/public'
+          component={ExamplePublicPage}/>
       </BrowserRouter>
     );
   }
 }
+
+const ExamplePublicPage = () => {
+  return <h2>This is a public page!</h2>;
+};
 
 /** Creates a SampleFlow with props passed in.
  *
