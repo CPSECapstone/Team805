@@ -1,68 +1,48 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
-import Form from './Forms/Form';
-import {Button} from '@material-ui/core';
-import './App.css';
+import SampleFlow from './SampleFlow/SampleFlow';
+import uibuilder from './uibuilder.js';
+import {BrowserRouter, Route} from 'react-router-dom';
+import Login from './Login/Login';
+import Homepage from './Homepage/Homepage';
+import PrivateRoute from './CustomRoutes/PrivateRoute';
+import PublicRoute from './CustomRoutes/PublicRoute';
 
 /** Main App Component */
 class App extends Component {
   /**
-   * @constructor
-   * @param {object} props
-   */
-  constructor(props) {
-    super(props);
-    this.state = {
-      formData: null,
-    };
-
-    this.sampleFlow = this.sampleFlow.bind(this);
-  }
-
-  /**
-   * Renders App based on state information
-   * @return {div} - Returns the fully rendered React app
+   *
+   *
+   * @return {*} The main application
+   * @memberof App
    */
   render() {
-    if (!this.state.formData) {
-      return (
-        <div className="App">
-          <p>CloudHaven Sample Form Flow</p>
-          <Button variant="contained" onClick={this.sampleFlow}>Login</Button>
-        </div>
-      );
-    } else {
-      return (
-        <div className="App">
-          <p>CloudHaven Sample Form Flow</p>
-          <Form config={this.state.formData} formPost={this.props.formPost} />
-        </div>
-      );
-    }
-  }
-
-  /**
-   * Runs through basic flow and sets state accordingly
-   */
-  async sampleFlow() {
-    let res = await this.props.loginPost('testUser', 'testPass');
-    if (res !== 200) {
-      console.log('login failed');
-      return;
-    }
-    res = await this.props.getFormData();
-    if (res.status !== 200) {
-      console.log('get form data failed');
-      return;
-    }
-    this.setState({formData: res.data});
+    return (
+      <BrowserRouter>
+        <Route exact path='/' component = {Homepage}/>
+        <PrivateRoute path='/sampleflow' component = {BuiltSampleFlow}/>
+        <PublicRoute restricted={true} exact path='/login' component={Login}/>
+        <PublicRoute restricted={false} exact path='/public'
+          component={ExamplePublicPage}/>
+      </BrowserRouter>
+    );
   }
 }
 
-App.propTypes = {
-  loginPost: PropTypes.func,
-  getFormData: PropTypes.func,
-  formPost: PropTypes.func,
+const ExamplePublicPage = () => {
+  return <h2>This is a public page!</h2>;
+};
+
+/** Creates a SampleFlow with props passed in.
+ *
+ * @return {*} A SampleFlow component that uses the UI Builder
+ * vendor APIs to generate a form through props.
+ */
+const BuiltSampleFlow = () => {
+  return <SampleFlow
+    loginPost={uibuilder.loginPost}
+    getFormData={uibuilder.getFormData}
+    formPost={uibuilder.formPost}
+  />;
 };
 
 export default App;
