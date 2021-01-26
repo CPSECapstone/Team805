@@ -1,11 +1,6 @@
 const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt');
 
-/**
- *
- * @param {*} passport the passport object used for auth.
- */
-function initialize(passport, getUserByUsername) {
+const initialize = (passport, getUserByUsername) => {
   const authenticateUser = async (username, password, done) => {
     const user = getUserByUsername(username);
     if (user == null) {
@@ -14,10 +9,9 @@ function initialize(passport, getUserByUsername) {
     }
 
     try {
-      if (password === user.password) {
-        // if (await bcrypt.compare(password, user.password)) {
+      if (password === user.password) { // add bcrypt decryption
         console.log('pwd match');
-        return done(null, user, {message: 'right password'});
+        return done(null, user, {message: 'Right password'});
       } else {
         console.log('pwd does not match');
         return done(null, false, {message: 'Wrong password'});
