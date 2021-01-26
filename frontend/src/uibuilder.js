@@ -17,6 +17,18 @@ const loginPost = async (userToken, passToken) => {
       });
 };
 
+const formPost = async (formData) => {
+  console.log('something happened');
+  return axios.post('http://localhost:5000/form', formData)
+      .then((response) => {
+        return response.status;
+      })
+      .catch((err) => {
+        console.log(err);
+        return null;
+      });
+};
+
 const getFormData = async () => {
   return axios.get('http://localhost:5000/form')
       .then((response) => {
@@ -73,4 +85,4 @@ class Field {
   }
 }
 
-module.exports = {loginPost, getFormData, parseFormData};
+module.exports = {loginPost, formPost, getFormData, parseFormData};

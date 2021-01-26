@@ -30,9 +30,7 @@ class Form extends Component {
 
   /** Handles form submission */
   async handleSubmit() {
-    alert(`A form was submitted: \n${this.state.firstName}
-      ${this.state.lastName}\n${this.state.email}
-      ${this.state.password}\n${this.state.gender}`);
+    this.props.formPost(this.state);
   }
 
   /**
@@ -64,6 +62,7 @@ class Form extends Component {
 
 Form.propTypes = {
   config: PropTypes.object,
+  formPost: PropTypes.func,
 };
 
 export default Form;
