@@ -3,6 +3,7 @@ import SampleFlow from './SampleFlow/SampleFlow';
 import uibuilder from './uibuilder.js';
 import {BrowserRouter, Route} from 'react-router-dom';
 import Login from './Login/Login';
+import Registration from './Registration/Registration';
 import Homepage from './Homepage/Homepage';
 import PrivateRoute from './CustomRoutes/PrivateRoute';
 import PublicRoute from './CustomRoutes/PublicRoute';
@@ -21,6 +22,8 @@ class App extends Component {
         <Route exact path='/' component = {Homepage}/>
         <PrivateRoute path='/sampleflow' component = {BuiltSampleFlow}/>
         <PublicRoute restricted={true} exact path='/login' component={Login}/>
+        <PublicRoute restricted={false} exact path='/register'
+          component={Registration}/>
         <PublicRoute restricted={false} exact path='/public'
           component={ExamplePublicPage}/>
       </BrowserRouter>
