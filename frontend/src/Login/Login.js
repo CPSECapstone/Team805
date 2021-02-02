@@ -76,8 +76,8 @@ const Login = () => {
           Sign In
         </Button>
         <p className="message">
-          New User?
-          <Link to="/register">Register</Link>
+          New to Cloudhaven?
+          <Link to="/register"> Register</Link>
         </p>
       </form>
     </Container>

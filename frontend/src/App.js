@@ -7,6 +7,7 @@ import Registration from './Registration/Registration';
 import Homepage from './Homepage/Homepage';
 import PrivateRoute from './CustomRoutes/PrivateRoute';
 import PublicRoute from './CustomRoutes/PublicRoute';
+import Landing from './Homepage/Landing';
 
 /** Main App Component */
 class App extends Component {
@@ -19,7 +20,8 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Route exact path='/' component = {Homepage}/>
+        <Route exact path='/' component = {Landing}/>
+        <PrivateRoute path='/home' component = {Homepage}/>
         <PrivateRoute path='/sampleflow' component = {BuiltSampleFlow}/>
         <PublicRoute restricted={true} exact path='/login' component={Login}/>
         <PublicRoute restricted={false} exact path='/register'
