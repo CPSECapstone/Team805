@@ -6,6 +6,7 @@ import Login from './Login/Login';
 import Homepage from './Homepage/Homepage';
 import PrivateRoute from './CustomRoutes/PrivateRoute';
 import PublicRoute from './CustomRoutes/PublicRoute';
+import Registration from './Registration/Registration';
 
 /** Main App Component */
 class App extends Component {
@@ -23,6 +24,8 @@ class App extends Component {
         <PublicRoute restricted={true} exact path='/login' component={Login}/>
         <PublicRoute restricted={false} exact path='/public'
           component={ExamplePublicPage}/>
+        <PublicRoute Registration={false} exact path='/register'
+          component={Registration}/>
       </BrowserRouter>
     );
   }
