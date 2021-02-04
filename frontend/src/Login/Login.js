@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -74,9 +75,13 @@ const Login = () => {
         >
           Sign In
         </Button>
+        <p className="message">
+          New to Cloudhaven?
+          <Link to="/register"> Register</Link>
+        </p>
       </form>
     </Container>
   );
 };
 
-export default Login;
+export default withRouter(Login);
