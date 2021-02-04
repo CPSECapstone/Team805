@@ -4,6 +4,19 @@ const passport = require('passport');
 const initializePassport = require('./passport-local-config');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+// Mongoose models
+const usersModel = require('./models/users');
+
+// Database connection (ensure env variables are set for username/password)
+const dbuser = process.env.dbuser;
+const dbpass = process.env.dbpass;
+mongoose.connect('mongodb+srv://' + dbuser + ':' + dbpass + '@cloudhaven.92yac.mongodb.net/CloudHaven?retryWrites=true&w=majority', {useNewUrlParser: true});
+const connection = mongoose.connection;
+connection.once('open', function() {
+  console.log('MongoDB connection was successful');
+});
 
 // Middleware
 const app = express();
@@ -71,5 +84,15 @@ app.post(
       )(req, res, next);
     },
 );
+
+app.get('/users/:userId/services', function(req, res) {
+  usersModel.find({userId: req.params.userId}, function(err, users) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(users);
+    }
+  });
+});
 
 app.listen(3001, () => console.log('Login API on port 3001'));
