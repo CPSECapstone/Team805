@@ -29,6 +29,7 @@ const useStyles = makeStyles({
 export default function Content() {
   const classes = useStyles();
   const data = [
+    {name: 'Sample Flow', favorite: 1},
     {name: 'Email', favorite: 1},
     {name: 'Slack', favorite: 0},
     {name: 'OneDrive', favorite: 1},
