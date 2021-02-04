@@ -10,6 +10,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import StarIcon from '@material-ui/icons/Star';
 import StarOutline from '@material-ui/icons/Star';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -29,10 +30,10 @@ const useStyles = makeStyles({
 export default function Content() {
   const classes = useStyles();
   const data = [
-    {name: 'Sample Flow', favorite: 1},
-    {name: 'Email', favorite: 1},
-    {name: 'Slack', favorite: 0},
-    {name: 'OneDrive', favorite: 1},
+    {name: 'Sample Flow', favorite: 1, link: 'sampleflow'},
+    {name: 'Email', favorite: 1, link: '/'},
+    {name: 'Slack', favorite: 0, link: '/'},
+    {name: 'OneDrive', favorite: 1, link: '/'},
   ];
   const [clicked, setClicked] = useState();
   return (
@@ -47,7 +48,7 @@ export default function Content() {
         {data.map((elem) => (
           <Grid item xs={3} key={data.indexOf(elem)}>
             <Card>
-              <CardActionArea>
+              <CardActionArea component={Link} to={`${elem.link}`}>
                 <CardHeader
                   title={`${elem.name}`}
                 />
