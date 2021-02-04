@@ -8,6 +8,7 @@ import Homepage from './Homepage/Homepage';
 import PrivateRoute from './CustomRoutes/PrivateRoute';
 import PublicRoute from './CustomRoutes/PublicRoute';
 import Landing from './Homepage/Landing';
+import VendorMarketplace from './VendorMarketplace/VendorMarketplace';
 
 /** Main App Component */
 class App extends Component {
@@ -28,6 +29,10 @@ class App extends Component {
           component={Registration}/>
         <PublicRoute restricted={false} exact path='/public'
           component={ExamplePublicPage}/>
+        <PublicRoute Registration={false} exact path='/register'
+          component={Registration}/>
+        <PrivateRoute path='/market'
+          component={VendorMarketplace}/>
       </BrowserRouter>
     );
   }

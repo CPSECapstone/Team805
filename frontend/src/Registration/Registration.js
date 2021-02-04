@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {TextField, Button, Container} from '@material-ui/core';
+import bcrypt from 'bcryptjs';
 
 /** Class Component for Registration Page */
 class Registration extends Component {
@@ -22,6 +23,7 @@ class Registration extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.registerUser = this.registerUser.bind(this);
     this.validateEntries = this.validateEntries.bind(this);
   }
 
@@ -36,14 +38,17 @@ class Registration extends Component {
   /** Handles registration attempt */
   async handleSubmit() {
     if (this.validateEntries()) {
+      this.registerUser();
       alert(`User registered: \n${this.state.username}
       \n${this.state.email}`);
     }
   }
 
-  /** Stub for when database is implemented to do validation/registration */
+  /** Sends registration information to DB  */
   async registerUser() {
-
+    bcrypt.hash(this.state.password, 10, function(err, hash) {
+      // 'hash' variable contains the hash to store and be checked against later
+    });
   }
 
   /** Checks to make sure passwords match
