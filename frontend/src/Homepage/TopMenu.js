@@ -17,6 +17,7 @@ import {deleteCookie} from '../utils';
 
 import AccountBox from '@material-ui/icons/AccountBox';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import Store from '@material-ui/icons/Store';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -180,14 +181,18 @@ export default function TopMenu() {
             </ListItemIcon>
             <ListItemText primary='Sign Out'/>
           </ListItem>
+
+          <ListItem button component={Link} to='/market'>
+            <ListItemIcon>
+              <Store />
+            </ListItemIcon>
+            <ListItemText primary='Marketplace'/>
+          </ListItem>
         </List>
         <Divider />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          Welcome, user.
-        </Typography>
       </main>
     </div>
   );
