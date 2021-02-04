@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -10,6 +10,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import StarIcon from '@material-ui/icons/Star';
 import StarOutline from '@material-ui/icons/Star';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import axios from 'axios';
 
 const useStyles = makeStyles({
   root: {
@@ -28,12 +29,24 @@ const useStyles = makeStyles({
    */
 export default function Content() {
   const classes = useStyles();
-  const data = [
-    {name: 'Email', favorite: 1},
-    {name: 'Slack', favorite: 0},
-    {name: 'OneDrive', favorite: 1},
-  ];
-  const [clicked, setClicked] = useState();
+  const [services, setServices] = useState([]);
+
+  useEffect(() => {
+    /** Obtains list of subscribed services for current user
+     *  @return {null} - Returns nothing, only updates state
+     */
+    async function fetchServices() {
+      try {
+        const response = await axios.get('/users/0/services');
+        setServices(response.data[0].subscribedServices);
+      } catch (error) {
+        console.log(error);
+        setServices([]);
+      }
+    }
+    fetchServices();
+  }, []);
+
   return (
     <div className={classes.root}>
       <Grid
@@ -43,8 +56,8 @@ export default function Content() {
         justify="flex-start"
         alignItems="flex-start"
       >
-        {data.map((elem) => (
-          <Grid item xs={3} key={data.indexOf(elem)}>
+        {services.map((elem) => (
+          <Grid item xs={3} key={services.indexOf(elem)}>
             <Card>
               <CardActionArea>
                 <CardHeader
@@ -56,8 +69,8 @@ export default function Content() {
               <CardActions disableSpacing>
                 <IconButton
                   aria-label="add to favorites"
-                  onClick={() => setClicked(true)}>
-                  {clicked ? <StarIcon /> : <StarOutline />}
+                  onClick={() => {}}>
+                  {elem.isFavorite ? <StarIcon /> : <StarOutline />}
                 </IconButton>
                 <IconButton>
                   <NotificationsIcon/>
