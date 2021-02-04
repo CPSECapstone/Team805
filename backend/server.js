@@ -27,7 +27,8 @@ const users = [
     id: 1,
     name: 'John Smith',
     username: 'user1',
-    password: 'password!',
+    password: '$2a$10$IadWSbtWCdNRxYdreQ6to.CxdvANnY/Pd7DSJ7lKgkDVI6ba2sBMy',
+    // hashed pwd for 'password!' ^^^^^^
     email: 'email@gmail.com',
   },
 ];
