@@ -15,6 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import AccountBox from '@material-ui/icons/AccountBox';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import Store from '@material-ui/icons/Store';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -147,21 +148,29 @@ export default function TopMenu() {
         </div>
         <Divider />
         <List>
-          {['Profile', 'Sign Out'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ?
-              <AccountBox /> : <ExitToApp />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button key = {'Profile'}>
+            <ListItemIcon>
+              <AccountBox />
+            </ListItemIcon>
+            <ListItemText primary={'Profile'} />
+          </ListItem>
+          <ListItem button key = {'Marketplace'}>
+            <ListItemIcon>
+              <Store />
+            </ListItemIcon>
+            <ListItemText primary={'Marketplace'} />
+          </ListItem>
+          <ListItem button key = {'Sign Out'}>
+            <ListItemIcon>
+              <ExitToApp />
+            </ListItemIcon>
+            <ListItemText primary={'Sign Out'} />
+          </ListItem>
         </List>
         <Divider />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          Welcome, user.
-        </Typography>
       </main>
     </div>
   );
