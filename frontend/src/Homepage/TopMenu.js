@@ -172,6 +172,14 @@ export default function TopMenu() {
             </ListItemIcon>
             <ListItemText primary='Profile'/>
           </ListItem>
+
+          <ListItem button component={Link} to='/market'>
+            <ListItemIcon>
+              <Store />
+            </ListItemIcon>
+            <ListItemText primary='Marketplace'/>
+          </ListItem>
+
           {/* Signout deletes cookie, eventually
             should redirect to landing page */}
           <ListItem button onClick={ () => deleteCookie('LoggedInUser')}
@@ -180,13 +188,6 @@ export default function TopMenu() {
               <ExitToApp/>
             </ListItemIcon>
             <ListItemText primary='Sign Out'/>
-          </ListItem>
-
-          <ListItem button component={Link} to='/market'>
-            <ListItemIcon>
-              <Store />
-            </ListItemIcon>
-            <ListItemText primary='Marketplace'/>
           </ListItem>
         </List>
         <Divider />
