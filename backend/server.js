@@ -60,15 +60,10 @@ app.post(
             } catch (error) {
               return next(error);
             }
-            req.login(
-                user,
-                {session: true},
-                async (error) => {
-                  if (error) return next(error);
-                  console.log('Sending login sucess');
-                  return res.send({status: 'success'});
-                },
-            );
+            console.log('sending login sucess');
+            // change what gets sent here
+            // if you want to send more info to client
+            return res.json({status: 'success'});
           },
       )(req, res, next);
     },

@@ -22,24 +22,16 @@ const Login = () => {
     document.cookie = key + '=' + (value || '') + expires + '; path=/';
   };
 
-  const axiosConfig = {
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
-    },
-  };
-
   const login = () => {
     axios.post('http://localhost:3001/login',
         {
           username: loginUsername,
           password: loginPassword,
-        }, {
-          withCredentials: true,
         })
-        .catch( (err) => console.log('error in logging in'))
+        .catch( (err) => console.log('error in logging in', err) )
         .then((res) => {
-          console.log('data is', res);
+          // change this if you change the response from login post
+          // for ex if you want to store id instead, you should gather it here
           if (res.data['status'] == 'success') {
             // create a cookie that stores the username for 1 hour
             console.log('login sucess');
@@ -48,7 +40,7 @@ const Login = () => {
           } else {
             console.log('login fail');
           }
-        }, axiosConfig);
+        });
   };
 
   return (
@@ -56,7 +48,7 @@ const Login = () => {
       <Container component='div' maxWidth='sm'>
         <h2 className = 'Title'>CloudHaven Login</h2>
       </Container>
-      <form className= 'LoginForm' onSubmit= {login}>
+      <form className= 'LoginForm'>
         <TextField
           variant="outlined"
           margin="normal"
@@ -80,11 +72,11 @@ const Login = () => {
           onChange={(e) => setLoginPassword(e.target.value)}
         />
         <Button
-          type="submit"
+          type="button"
           fullWidth
           variant="contained"
           color="primary"
-        >
+          onClick={login}>
           Sign In
         </Button>
         <p className="message">
