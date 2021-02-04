@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import SampleFlow from './SampleFlow/SampleFlow';
 import uibuilder from './uibuilder.js';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 import Login from './Login/Login';
 import Registration from './Registration/Registration';
 import Homepage from './Homepage/Homepage';
@@ -21,15 +21,11 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Route exact path='/' component = {Landing}/>
+        <PublicRoute restricted={true} exact path='/' component = {Landing}/>
         <PrivateRoute path='/home' component = {Homepage}/>
         <PrivateRoute path='/sampleflow' component = {BuiltSampleFlow}/>
-        <PublicRoute restricted={true} exact path='/login' component={Login}/>
-        <PublicRoute restricted={false} exact path='/register'
-          component={Registration}/>
-        <PublicRoute restricted={false} exact path='/public'
-          component={ExamplePublicPage}/>
-        <PublicRoute Registration={false} exact path='/register'
+        <PublicRoute restricted={true} path='/login' component={Login}/>
+        <PublicRoute restricted={true} path='/register'
           component={Registration}/>
         <PrivateRoute path='/market'
           component={VendorMarketplace}/>
@@ -37,10 +33,6 @@ class App extends Component {
     );
   }
 }
-
-const ExamplePublicPage = () => {
-  return <h2>This is a public page!</h2>;
-};
 
 /** Creates a SampleFlow with props passed in.
  *

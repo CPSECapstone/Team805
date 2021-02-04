@@ -65,7 +65,8 @@ app.post(
                 {session: true},
                 async (error) => {
                   if (error) return next(error);
-                  return res.json({status: 'success'});
+                  console.log('Sending login sucess');
+                  return res.send({status: 'success'});
                 },
             );
           },

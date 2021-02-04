@@ -22,6 +22,13 @@ const Login = () => {
     document.cookie = key + '=' + (value || '') + expires + '; path=/';
   };
 
+  const axiosConfig = {
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+    },
+  };
+
   const login = () => {
     axios.post('http://localhost:3001/login',
         {
@@ -32,13 +39,18 @@ const Login = () => {
         })
         .catch( (err) => console.log('error in logging in'))
         .then((res) => {
+          console.log('data is', res);
           if (res.data['status'] == 'success') {
             // create a cookie that stores the username for 1 hour
+            console.log('login sucess');
             setCookie('LoggedInUser', loginUsername, 60);
-            window.location.href = '/';
+            window.location.href = '/home';
+          } else {
+            console.log('login fail');
           }
-        });
+        }, axiosConfig);
   };
+
   return (
     <Container component='div' maxWidth='xs'>
       <Container component='div' maxWidth='sm'>
