@@ -40,7 +40,8 @@ const users = [
     id: 1,
     name: 'John Smith',
     username: 'user1',
-    password: 'password!',
+    password: '$2a$10$IadWSbtWCdNRxYdreQ6to.CxdvANnY/Pd7DSJ7lKgkDVI6ba2sBMy',
+    // hashed pwd for 'password!' ^^^^^^
     email: 'email@gmail.com',
   },
 ];
@@ -72,14 +73,10 @@ app.post(
             } catch (error) {
               return next(error);
             }
-            req.login(
-                user,
-                {session: true},
-                async (error) => {
-                  if (error) return next(error);
-                  return res.json({status: 'success'});
-                },
-            );
+            console.log('sending login sucess');
+            // change what gets sent here
+            // if you want to send more info to client
+            return res.json({status: 'success'});
           },
       )(req, res, next);
     },

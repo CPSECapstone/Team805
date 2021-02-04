@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {TextField, Button, Container} from '@material-ui/core';
 import bcrypt from 'bcryptjs';
@@ -134,6 +135,10 @@ class Registration extends Component {
         >
           Sign Up
         </Button>
+        <p className="message">
+          Already have an account?
+          <Link to="/login"> Sign In</Link>
+        </p>
       </Container>
     );
   }
@@ -143,4 +148,4 @@ Registration.propTypes = {
   showLanding: PropTypes.func,
 };
 
-export default Registration;
+export default withRouter(Registration);

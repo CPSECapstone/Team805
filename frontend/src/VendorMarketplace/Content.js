@@ -1,17 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Grid from '@material-ui/core/Grid';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import StarIcon from '@material-ui/icons/Star';
-import StarOutline from '@material-ui/icons/Star';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import axios from 'axios';
-import {Link} from 'react-router-dom';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles({
   root: {
@@ -30,25 +27,12 @@ const useStyles = makeStyles({
    */
 export default function Content() {
   const classes = useStyles();
-
-  const [services, setServices] = useState([]);
-
-  useEffect(() => {
-    /** Obtains list of subscribed services for current user
-     *  @return {null} - Returns nothing, only updates state
-     */
-    async function fetchServices() {
-      try {
-        const response = await axios.get('/users/0/services');
-        setServices(response.data[0].subscribedServices);
-      } catch (error) {
-        console.log(error);
-        setServices([]);
-      }
-    }
-    fetchServices();
-  }, []);
-  
+  const data = [
+    {name: 'Email', favorite: 1},
+    {name: 'Slack', favorite: 0},
+    {name: 'OneDrive', favorite: 1},
+  ];
+  const [clicked, setClicked] = useState();
   return (
     <div className={classes.root}>
       <Grid
@@ -58,10 +42,10 @@ export default function Content() {
         justify="flex-start"
         alignItems="flex-start"
       >
-        {services.map((elem) => (
-          <Grid item xs={3} key={services.indexOf(elem)}>
+        {data.map((elem) => (
+          <Grid item xs={3} key={data.indexOf(elem)}>
             <Card>
-              <CardActionArea component={Link} to={`${elem.link}`}>
+              <CardActionArea>
                 <CardHeader
                   title={`${elem.name}`}
                 />
@@ -71,11 +55,8 @@ export default function Content() {
               <CardActions disableSpacing>
                 <IconButton
                   aria-label="add to favorites"
-                  onClick={() => {}}>
-                  {elem.isFavorite ? <StarIcon /> : <StarOutline />}
-                </IconButton>
-                <IconButton>
-                  <NotificationsIcon/>
+                  onClick={() => setClicked(true)}>
+                  {clicked ? <AddIcon /> : <CheckCircleIcon />}
                 </IconButton>
               </CardActions>
             </Card>

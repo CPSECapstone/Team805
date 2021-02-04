@@ -12,12 +12,17 @@ import IconButton from '@material-ui/core/IconButton';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import {Link} from 'react-router-dom';
+import {deleteCookie} from '../utils';
 
 import AccountBox from '@material-ui/icons/AccountBox';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import Store from '@material-ui/icons/Store';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import VpnKey from '@material-ui/icons/VpnKey';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 const drawerWidth = 240;
 
@@ -147,21 +152,48 @@ export default function TopMenu() {
         </div>
         <Divider />
         <List>
-          {['Profile', 'Sign Out'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ?
-              <AccountBox /> : <ExitToApp />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button component={Link} to='/register'>
+            <ListItemIcon>
+              <PersonAddIcon/>
+            </ListItemIcon>
+            <ListItemText primary='Register'/>
+          </ListItem>
+
+          <ListItem button component={Link} to='/login'>
+            <ListItemIcon>
+              <VpnKey/>
+            </ListItemIcon>
+            <ListItemText primary='Log In'/>
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <AccountBox/>
+            </ListItemIcon>
+            <ListItemText primary='Profile'/>
+          </ListItem>
+
+          <ListItem button component={Link} to='/market'>
+            <ListItemIcon>
+              <Store />
+            </ListItemIcon>
+            <ListItemText primary='Marketplace'/>
+          </ListItem>
+
+          {/* Signout deletes cookie, eventually
+            should redirect to landing page */}
+          <ListItem button onClick={ () => deleteCookie('LoggedInUser')}
+            component={Link} to='/'>
+            <ListItemIcon>
+              <ExitToApp/>
+            </ListItemIcon>
+            <ListItemText primary='Sign Out'/>
+          </ListItem>
         </List>
         <Divider />
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <Typography paragraph>
-          Welcome, user.
-        </Typography>
       </main>
     </div>
   );
