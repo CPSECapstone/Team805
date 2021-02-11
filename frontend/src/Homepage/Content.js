@@ -48,7 +48,7 @@ export default function Content() {
     }
     fetchServices();
   }, []);
-  
+
   return (
     <div className={classes.root}>
       <Grid

@@ -37,14 +37,11 @@ const useStyles = makeStyles((theme) => ({
 
 /**
    * Renders searchbar for vendor marketplace
+   * @param {function} props - the search function should be passed here.
    * @return {div} - Returns the searchbar with text input and icon
    */
-export default function SearchBar() {
+export default function SearchBar(props) {
   const classes = useStyles();
-
-  const search = () => {
-    document.getElementById('searchInput').value = '';
-  };
 
   return (
     <div className={classes.root}>
@@ -59,9 +56,13 @@ export default function SearchBar() {
                 input: classes.inputInput,
               }}
               inputProps={{'aria-label': 'search'}}
+              onChange={(event) => props.onChange(event.target.value)}
             />
           </div>
-          <IconButton color='inherit' aria-label='Search' onClick={search}>
+          <IconButton
+            color='inherit'
+            aria-label='Search'
+            onClick={() => document.getElementById('searchInput').value = ''}>
             <SearchIcon fontSize='large'/>
           </IconButton>
           <div className={classes.root} />
@@ -69,4 +70,8 @@ export default function SearchBar() {
       </AppBar>
     </div>
   );
+
+  SearchBar.propTypes = {
+    onChange: PropTypes.func,
+  };
 }
