@@ -23,15 +23,22 @@ const useStyles = makeStyles({
 
 /**
    * Renders cards for applications on homepage
+   * @param {searchInput} props - text from the search bar
    * @return {Grid} - Returns Grid of cards
    */
-export default function Content() {
+export default function Content(props) {
   const classes = useStyles();
-  const data = [
+  const dataFromDB = [
     {name: 'Email', favorite: 1},
     {name: 'Slack', favorite: 0},
     {name: 'OneDrive', favorite: 1},
+    {name: 'Super', favorite: 1},
+    {name: 'Spreadsheets', favorite: 1},
+    {name: 'Google Sheets', favorite: 1},
   ];
+  const data = dataFromDB.filter((service) =>
+    service.name.toLowerCase().includes(
+        props.searchInput.toLowerCase()));
   const [clicked, setClicked] = useState();
   return (
     <div className={classes.root}>
@@ -65,4 +72,8 @@ export default function Content() {
       </Grid>
     </div>
   );
+
+  Content.propTypes = {
+    searchInput: PropTypes.string,
+  };
 }

@@ -8,6 +8,16 @@ import Content from './Content.js';
  */
 class Homepage extends Component {
   /**
+   * @param {*} props - not used
+   */
+  constructor(props) {
+    super(props);
+    this.state = {
+      search: '',
+    };
+  }
+
+  /**
    * Renders vendor marketplace
    * @return {div} - Returns the marketplace components
    */
@@ -15,8 +25,8 @@ class Homepage extends Component {
     return (
       <div>
         <TopMenu/>
-        <SearchBar/>
-        <Content/>
+        <SearchBar onChange={(value) => this.setState({search: value})}/>
+        <Content searchInput={this.state.search}/>
       </div>
     );
   }
