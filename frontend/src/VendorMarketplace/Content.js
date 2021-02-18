@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -9,6 +9,7 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import AddIcon from '@material-ui/icons/Add';
+import axios from 'axios';
 
 const useStyles = makeStyles({
   root: {
@@ -28,18 +29,40 @@ const useStyles = makeStyles({
    */
 export default function Content(props) {
   const classes = useStyles();
-  const dataFromDB = [
-    {name: 'Email', favorite: 1},
-    {name: 'Slack', favorite: 0},
-    {name: 'OneDrive', favorite: 1},
-    {name: 'Super', favorite: 1},
-    {name: 'Spreadsheets', favorite: 1},
-    {name: 'Google Sheets', favorite: 1},
-  ];
-  const data = dataFromDB.filter((service) =>
+  const [userServices, setUserServices] = useState([]);
+  const [services, setServices] = useState([]);
+  const data = services.filter((service) =>
     service.name.toLowerCase().includes(
         props.searchInput.toLowerCase()));
-  const [clicked, setClicked] = useState();
+
+  const addUserService = async (serviceId) => {
+    if (!userServices.includes(serviceId)) {
+      setUserServices([...userServices, serviceId]);
+      try {
+        await axios.post('/users/0/services', {serviceId: serviceId});
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    /** Obtains list of subscribed services
+     *  @return {null} - Returns nothing, only updates state
+     */
+    async function fetchServices() {
+      try {
+        const serviceResponse = await axios.get('/services');
+        const userResponse = await axios.get('users/0/services');
+        setServices(serviceResponse.data);
+        setUserServices(userResponse.data.map((service) => service.serviceId));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchServices();
+  }, []);
+
   return (
     <div className={classes.root}>
       <Grid
@@ -62,8 +85,9 @@ export default function Content(props) {
               <CardActions disableSpacing>
                 <IconButton
                   aria-label="add to favorites"
-                  onClick={() => setClicked(true)}>
-                  {clicked ? <AddIcon /> : <CheckCircleIcon />}
+                  onClick={() => addUserService(elem.serviceId)}>
+                  {userServices.includes(elem.serviceId) ?
+                   <CheckCircleIcon /> : <AddIcon />}
                 </IconButton>
               </CardActions>
             </Card>

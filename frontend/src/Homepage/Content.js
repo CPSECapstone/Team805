@@ -8,7 +8,8 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import StarIcon from '@material-ui/icons/Star';
-import StarOutline from '@material-ui/icons/Star';
+import StarOutline from '@material-ui/icons/StarOutline';
+import CloseIcon from '@material-ui/icons/Close';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -37,17 +38,26 @@ export default function Content() {
     /** Obtains list of subscribed services for current user
      *  @return {null} - Returns nothing, only updates state
      */
-    async function fetchServices() {
+    async function fetchUserServices() {
       try {
         const response = await axios.get('/users/0/services');
-        setServices(response.data[0].subscribedServices);
+        setServices(response.data);
       } catch (error) {
         console.log(error);
         setServices([]);
       }
     }
-    fetchServices();
+    fetchUserServices();
   }, []);
+
+  const removeUserService = async (serviceId) => {
+    setServices(services.filter((service) => service.serviceId !== serviceId));
+    try {
+      await axios.delete('/users/0/services', {data: {serviceId: serviceId}});
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -76,6 +86,11 @@ export default function Content() {
                 </IconButton>
                 <IconButton>
                   <NotificationsIcon/>
+                </IconButton>
+                <IconButton onClick={() => {
+                  removeUserService(elem.serviceId);
+                }}>
+                  <CloseIcon/>
                 </IconButton>
               </CardActions>
             </Card>

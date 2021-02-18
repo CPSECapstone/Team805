@@ -8,10 +8,12 @@ const mongoose = require('mongoose');
 
 // Mongoose models
 const usersModel = require('./models/users');
+const servicesModel = require('./models/services');
 
 // Database connection (ensure env variables are set for username/password)
 const dbuser = process.env.dbuser;
 const dbpass = process.env.dbpass;
+mongoose.set('useFindAndModify', false);
 mongoose.connect('mongodb+srv://' + dbuser + ':' + dbpass + '@cloudhaven.92yac.mongodb.net/CloudHaven?retryWrites=true&w=majority', {useNewUrlParser: true});
 const connection = mongoose.connection;
 connection.once('open', function() {
@@ -82,14 +84,87 @@ app.post(
     },
 );
 
+// Route for getting user subscribed services
 app.get('/users/:userId/services', function(req, res) {
-  usersModel.find({userId: req.params.userId}, function(err, users) {
+  usersModel.find({userId: req.params.userId}, function(err, userData) {
     if (err) {
       res.send(err);
     } else {
-      res.send(users);
+      servicesModel.find({serviceId: {$in: userData[0].serviceIds}},
+          function(err, services) {
+            if (err) {
+              res.send(err);
+            } else {
+              const servicesWithFavorites = services.map((serviceDoc) => {
+                const serviceObj = serviceDoc.toObject();
+                serviceObj.isFavorite =
+                  userData[0].favoriteIds.includes(serviceDoc.serviceId);
+                return serviceObj;
+              });
+              res.send(servicesWithFavorites);
+            }
+          });
     }
   });
 });
+
+// Route for getting all available services
+app.get('/services', function(req, res) {
+  servicesModel.find({}, function(err, services) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(services);
+    }
+  });
+});
+
+// Route for adding a subscribed service to a specific user
+app.post('/users/:userId/services', function(req, res) {
+  usersModel.findOneAndUpdate({userId: req.params.userId},
+      {$push: {serviceIds: req.body.serviceId}}, function(err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+});
+
+// Route for removing a subscribed service from a specific user
+app.delete('/users/:userId/services', function(req, res) {
+  usersModel.findOneAndUpdate({userId: req.params.userId},
+      {$pull: {serviceIds: req.body.serviceId}}, function(err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      });
+});
+
+// // Route for adding a subscribed service to user favorites
+// app.post('/users/:userId/favorites', function(req, res) {
+//   usersModel.findOneAndUpdate({userId: req.params.userId},
+//       {$push: {favoriteIds: req.body.serviceId}}, function(err, result) {
+//         if (err) {
+//           console.log(err);
+//         } else {
+//           res.send(result);
+//         }
+//       });
+// });
+
+// // Route for removing a subscribed service from user favorites
+// app.delete('/users/:userId/favorites', function(req, res) {
+//   usersModel.findOneAndUpdate({userId: req.params.userId},
+//       {$pull: {favoriteIds: req.body.serviceId}}, function(err, result) {
+//         if (err) {
+//           console.log(err);
+//         } else {
+//           res.send(result);
+//         }
+//       });
+// });
 
 app.listen(3001, () => console.log('Login API on port 3001'));
