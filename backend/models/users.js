@@ -15,6 +15,15 @@ const users = new Schema({
   userId: {
     type: String,
   },
+  userName: {
+    type: String,
+  },
+  password: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
   subscribedServices: {
     type: [userServices],
   },
