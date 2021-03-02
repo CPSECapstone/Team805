@@ -1,8 +1,12 @@
 language: node_js
 node_js:
-    - 12
+- 12
 branches:
-    only:
-    - main
+  only:
+  - main
 script:
-    - chmod +x build_tests.sh && bash ./build_tests.sh
+- chmod +x build_tests.sh && bash ./build_tests.sh
+env:
+  global:
+  - secure: pnBz9ECkTmP/9KXwO3oPpAYRugoK3KVUqv2Sp+qbr2uZ7FR5XTK/5FL0By1rvP46OWOdYB6Xr99rUsYGZV6ag9axM1mOPCU4p/0Ie7S/n8Do2ZhkgWUVFSNP+shC2F/yLvj/IxUQo1z+8sFsrmw6fyT0FC0g2Gzs/Ve2qbGQ0An2Bh6ShzMYajZ1ukiE3qfJAGwEqvq9RrUydoR7fY71KvAuOYEGXtW26VQBEBzshiOm8yeEu/grRa1km7BtWeMxVfhfyhpmGR9v5xYJ3f/PQT6ZkR3cqFISxDCdD1MoUNBigCixk5rPUEfaDytFb6K6PN1rLIpjIUvv0Lt+LYuw+mSIcmb84U6yTEh+siaVuvyLeDXNaGGcuL8zufVO7PWMXBEBBLACTK+STPdYIRborD3CN4NLr82+oRdeKtqzc7AKZ3CyXKFrn1mLpA93t7Rd7+Ya8SWJrKGU0bMLetZh9dwnVmoEWRHO5jR9TpQJ3gVccJlrIoU048th17WxMltz0l0fuVs6kwy+z08pxdqZ8iP774+gIeHrI0bSCbhmd2YDyGzF6Ms9xB4h+zmaUjXFv6I2EaZlJ+H4krCca9q9LRy8fJpOYb8aLv7PPsjaF8nsAeHMSnUjkhD1E6bt9g1buNnDvWHNtGpra40QHSWA2FKFuJ+j1hd4qZQvHeFzzfk=
+  - secure: i/pMBQxtFpw4wJqNjswTKu002A5CwDNJ8PPehDngNk6/lTkum2XVHPTRzfpufHsYx4wSeoIq8yd3hZrwRI3fuFFOkERYT8fBU/Ie3R6jIKvBJnVaVAuDAf34dSkDVyp/iQL5t+zoJBZXHUU0z+U2qAo0Da8hJlwzCr+yRlA9XvtPkblXy8B5rf7OeMJgqmpnlB1UdbhK9ZNR9twbExJzUtgatgPum/GqwIAl9HwAzmRycC/0KFQZqp3IwnN767dhSf2FTR3ffA/bIjvDPTMJA7ssAxRr1dUnNgakFPr3WntjD8yau/QY47O74Cfef8z/Mm0LsDMDJZBOMz64JPK+3UTes6bDj/BLwvBz+DZPnM/Y5eUwBQeGKXwgeamfJnfBgGh1yQro/9X1caDobyyw5+dY8bZMqODqVbSBoYrKbnZWmQioQZE6LZU2Vntd4DBHN93dPiSQiuA5DWGmG7qNc0GBAvC7SpDgSaaaNZvbLjdmXM8Tq+MNVY8qDMRHDzBQnZyxNduXydU2EQZ58eUvmV+G18WbxUAXVbu9ccWZUxjLuIuGHtN8oestB4LurpoVLIf23HkkoO5vCgtb1IBoEhcBmMnFUa1rsFpQhqjls1cJdZbxHnQk3C3BD4Znx+U0rZD0wyI4qptBwmWB6sYzy6BAq4GOu58m//JZT5+JFAQ=
