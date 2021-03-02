@@ -12,6 +12,15 @@ const users = new Schema({
   favoriteIds: {
     type: Array,
   },
+  username: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  password: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model('users', users);

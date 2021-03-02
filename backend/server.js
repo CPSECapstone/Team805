@@ -84,6 +84,46 @@ app.post(
     },
 );
 
+// FILE server.js
+
+// Route for getting json containing all relevant user data
+app.get('/users/:userId', function(req, res) {
+  console.log('test');
+  usersModel.findOne({userId: req.params.userId}, function(err, userData) {
+    if (err) {
+      res.send(err);
+    } else {
+      const relevantData = {
+        email: userData.email,
+        username: userData.username,
+      };
+      res.send(relevantData);
+    }
+  });
+});
+
+// Route for getting username
+app.get('/users/:userId/username', function(req, res) {
+  usersModel.findOne({userId: req.params.userId}, function(err, userData) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(userData.username);
+    }
+  });
+});
+
+// Route for getting user email
+app.get('/users/:userId/email', function(req, res) {
+  usersModel.findOne({userId: req.params.userId}, function(err, userData) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(userData.email);
+    }
+  });
+});
+
 // Route for getting user subscribed services
 app.get('/users/:userId/services', function(req, res) {
   usersModel.find({userId: req.params.userId}, function(err, userData) {
@@ -142,29 +182,5 @@ app.delete('/users/:userId/services', function(req, res) {
         }
       });
 });
-
-// // Route for adding a subscribed service to user favorites
-// app.post('/users/:userId/favorites', function(req, res) {
-//   usersModel.findOneAndUpdate({userId: req.params.userId},
-//       {$push: {favoriteIds: req.body.serviceId}}, function(err, result) {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           res.send(result);
-//         }
-//       });
-// });
-
-// // Route for removing a subscribed service from user favorites
-// app.delete('/users/:userId/favorites', function(req, res) {
-//   usersModel.findOneAndUpdate({userId: req.params.userId},
-//       {$pull: {favoriteIds: req.body.serviceId}}, function(err, result) {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           res.send(result);
-//         }
-//       });
-// });
 
 app.listen(3001, () => console.log('Login API on port 3001'));
