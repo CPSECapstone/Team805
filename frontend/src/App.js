@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import SampleFlow from './SampleFlow/SampleFlow';
 import uibuilder from './uibuilder.js';
-import {BrowserRouter} from 'react-router-dom';
+import {Route, BrowserRouter} from 'react-router-dom';
 import Login from './Login/Login';
 import Registration from './Registration/Registration';
 import Homepage from './Homepage/Homepage';
@@ -9,6 +9,7 @@ import PrivateRoute from './CustomRoutes/PrivateRoute';
 import PublicRoute from './CustomRoutes/PublicRoute';
 import Landing from './Homepage/Landing';
 import VendorMarketplace from './VendorMarketplace/VendorMarketplace';
+import _404 from './404/404';
 
 /** Main App Component */
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
           component={Registration}/>
         <PrivateRoute path='/market'
           component={VendorMarketplace}/>
+        <Route component={_404} />
       </BrowserRouter>
     );
   }

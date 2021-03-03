@@ -5,6 +5,7 @@ const initializePassport = require('./passport-local-config');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 // Mongoose models
 const usersModel = require('./models/users');
