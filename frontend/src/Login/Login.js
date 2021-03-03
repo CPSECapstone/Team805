@@ -6,6 +6,26 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import './Login.css';
 
+
+export const login = (username, password) => {
+  if (!username || !password) {
+    alert('username and password required!');
+    return;
+  }
+  axios.post('http://localhost:3002/login', {
+    username: username,
+    password: password,
+  })
+      .then((res) => {
+        if (res.status == 200) {
+          window.location.assign('/home');
+        } else {
+          console.log('login fail');
+        }
+      })
+      .catch((err) => console.log('error logging in', err));
+};
+
 /**
  *
  * @return {*}
@@ -13,35 +33,6 @@ import './Login.css';
 const Login = () => {
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
-
-  // expire time is in minutes
-  const setCookie = (key, value, expTime) => {
-    const date = new Date();
-    date.setTime(date.getTime() + (expTime * 10 * 6000));
-    const expires = '; expires=' + date.toUTC;
-    document.cookie = key + '=' + (value || '') + expires + '; path=/';
-  };
-
-  const login = () => {
-    axios.post('http://localhost:3001/login',
-        {
-          username: loginUsername,
-          password: loginPassword,
-        })
-        .catch( (err) => console.log('error in logging in', err) )
-        .then((res) => {
-          // change this if you change the response from login post
-          // for ex if you want to store id instead, you should gather it here
-          if (res.data['status'] == 'success') {
-            // create a cookie that stores the username for 1 hour
-            console.log('login sucess');
-            setCookie('LoggedInUser', loginUsername, 60);
-            window.location.href = '/home';
-          } else {
-            console.log('login fail');
-          }
-        });
-  };
 
   return (
     <Container component='div' maxWidth='xs'>
@@ -76,7 +67,7 @@ const Login = () => {
           fullWidth
           variant="contained"
           color="primary"
-          onClick={login}>
+          onClick={() => login(loginUsername, loginPassword)}>
           Sign In
         </Button>
         <p className="message">

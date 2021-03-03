@@ -23,6 +23,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import VpnKey from '@material-ui/icons/VpnKey';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import axios from 'axios';
 
 const drawerWidth = 240;
 
@@ -182,8 +183,11 @@ export default function TopMenu() {
 
           {/* Signout deletes cookie, eventually
             should redirect to landing page */}
-          <ListItem button onClick={ () => deleteCookie('LoggedInUser')}
-            component={Link} to='/'>
+          <ListItem button onClick={ () => {
+            deleteCookie('loggedIn');
+            axios.delete('http://localhost:3002/logout');
+          }}
+          component={Link} to='/'>
             <ListItemIcon>
               <ExitToApp/>
             </ListItemIcon>
