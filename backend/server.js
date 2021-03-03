@@ -5,10 +5,7 @@ const initializePassport = require('./passport-local-config');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
-// Mongoose models
-const usersModel = require('./models/users');
-const servicesModel = require('./models/services');
+require('dotenv').config();
 
 // Database connection (ensure env variables are set for username/password)
 const dbuser = process.env.dbuser;
@@ -60,6 +57,10 @@ initializePassport(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Routes
+app.use(require('./routes/userRoutes'));
+app.use(require('./routes/serviceRoutes'));
+
 app.post(
     '/login',
     async (req, res, next) => {
@@ -83,104 +84,5 @@ app.post(
       )(req, res, next);
     },
 );
-
-// FILE server.js
-
-// Route for getting json containing all relevant user data
-app.get('/users/:userId', function(req, res) {
-  console.log('test');
-  usersModel.findOne({userId: req.params.userId}, function(err, userData) {
-    if (err) {
-      res.send(err);
-    } else {
-      const relevantData = {
-        email: userData.email,
-        username: userData.username,
-      };
-      res.send(relevantData);
-    }
-  });
-});
-
-// Route for getting username
-app.get('/users/:userId/username', function(req, res) {
-  usersModel.findOne({userId: req.params.userId}, function(err, userData) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(userData.username);
-    }
-  });
-});
-
-// Route for getting user email
-app.get('/users/:userId/email', function(req, res) {
-  usersModel.findOne({userId: req.params.userId}, function(err, userData) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(userData.email);
-    }
-  });
-});
-
-// Route for getting user subscribed services
-app.get('/users/:userId/services', function(req, res) {
-  usersModel.find({userId: req.params.userId}, function(err, userData) {
-    if (err) {
-      res.send(err);
-    } else {
-      servicesModel.find({serviceId: {$in: userData[0].serviceIds}},
-          function(err, services) {
-            if (err) {
-              res.send(err);
-            } else {
-              const servicesWithFavorites = services.map((serviceDoc) => {
-                const serviceObj = serviceDoc.toObject();
-                serviceObj.isFavorite =
-                  userData[0].favoriteIds.includes(serviceDoc.serviceId);
-                return serviceObj;
-              });
-              res.send(servicesWithFavorites);
-            }
-          });
-    }
-  });
-});
-
-// Route for getting all available services
-app.get('/services', function(req, res) {
-  servicesModel.find({}, function(err, services) {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(services);
-    }
-  });
-});
-
-// Route for adding a subscribed service to a specific user
-app.post('/users/:userId/services', function(req, res) {
-  usersModel.findOneAndUpdate({userId: req.params.userId},
-      {$push: {serviceIds: req.body.serviceId}}, function(err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
-});
-
-// Route for removing a subscribed service from a specific user
-app.delete('/users/:userId/services', function(req, res) {
-  usersModel.findOneAndUpdate({userId: req.params.userId},
-      {$pull: {serviceIds: req.body.serviceId}}, function(err, result) {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send(result);
-        }
-      });
-});
 
 app.listen(3001, () => console.log('Login API on port 3001'));

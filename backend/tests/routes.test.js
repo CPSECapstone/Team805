@@ -1,5 +1,3 @@
-// FILE routes.test.js
-
 /**
  * @jest-environment node
  */
@@ -7,6 +5,8 @@ const axios = require('axios');
 const mongoose = require('mongoose');
 const usersModel = require('../models/users');
 
+// Setup
+const baseURL = 'http://localhost:3001';
 beforeAll(async () => {
   const dbuser = process.env.dbuser;
   const dbpass = process.env.dbpass;
@@ -16,37 +16,64 @@ beforeAll(async () => {
 
 // Full user data route
 test('should retrieve relevant user data', async () => {
-  return await axios.get('http://localhost:3001/users/0')
+  return await axios.get(baseURL + '/users/0')
       .then((response) => {
         expect(response.data)
             .toStrictEqual({email: 'testuser@gmail.com', username: 'testuser'});
       });
 });
 
+// Full user data route failure
+test('should fail to find user and return error', async () => {
+  return await axios.get(baseURL + '/users/-1')
+      .then((response) => {
+        expect(response.data)
+            .toEqual('No user found with userId: -1');
+      });
+});
+
 // User email route
 test('should retrieve user email', async () => {
-  return await axios.get('http://localhost:3001/users/0/email')
+  return await axios.get(baseURL + '/users/0/email')
       .then((response) => {
         expect(response.data)
             .toStrictEqual('testuser@gmail.com');
       });
 });
 
+// User email route failure
+test('should fail to find user and return error', async () => {
+  return await axios.get(baseURL + '/users/-1/email')
+      .then((response) => {
+        expect(response.data)
+            .toEqual('No user found with userId: -1');
+      });
+});
+
 // User username route
 test('should retrieve user username', async () => {
-  return await axios.get('http://localhost:3001/users/0/username')
+  return await axios.get(baseURL + '/users/0/username')
       .then((response) => {
         expect(response.data)
             .toStrictEqual('testuser');
       });
 });
 
-// User subscribed services route
-test('should retrieve user subscribed services', async () => {
-  return await axios.get('http://localhost:3001/users/0/services')
+// User username route failure
+test('should fail to find user and return error', async () => {
+  return await axios.get(baseURL + '/users/-1/username')
       .then((response) => {
         expect(response.data)
-            .toStrictEqual([
+            .toEqual('No user found with userId: -1');
+      });
+});
+
+// User subscribed services route
+test('should retrieve user subscribed services', async () => {
+  return await axios.get(baseURL + '/users/0/services')
+      .then((response) => {
+        expect(response.data)
+            .toEqual([
               {'_id': '601c2620f7acaeedf64b950e',
                 'serviceId': '1',
                 'name': 'Email',
@@ -65,40 +92,18 @@ test('should retrieve user subscribed services', async () => {
       });
 });
 
-// All services route
-test('should retrieve all available user services', async () => {
-  return await axios.get('http://localhost:3001/services')
+// User subscribed services route failure
+test('should fail to find user and return error', async () => {
+  return await axios.get(baseURL + '/users/-1/services')
       .then((response) => {
         expect(response.data)
-            .toStrictEqual([
-              {'_id': '6009e948515479572dd8d82e',
-                'serviceId': '0',
-                'name': 'TestService',
-                'link': '/'},
-              {'_id': '601c2620f7acaeedf64b950e',
-                'serviceId': '1',
-                'name': 'Email',
-                'link': '/'},
-              {'_id': '601c264ff7acaeedf64b950f',
-                'serviceId': '2',
-                'name': 'OneDrive', 'link': '/'},
-              {'_id': '602da029c4d296ff91c864cc',
-                'serviceId': '3', 'name': 'Sample Flow',
-                'link': 'sampleflow'},
-              {'_id': '602da039c4d296ff91c864cd',
-                'serviceId': '4',
-                'name': 'Google Sheets',
-                'link': '/'},
-              {'_id': '602da05bc4d296ff91c864ce',
-                'serviceId': '5',
-                'name': 'Google Docs',
-                'link': '/'}]);
+            .toEqual('No user found with userId: -1');
       });
 });
 
 // User add subscribed service route
 test('should add specific service to user services', async () => {
-  await axios.post('http://localhost:3001/users/0/services', {serviceId: '0'});
+  await axios.post(baseURL + '/users/0/services', {serviceId: '0'});
   return usersModel.findOne({userId: 0}, function(err, userData) {
     if (err) {
       throw new Error();
@@ -108,9 +113,18 @@ test('should add specific service to user services', async () => {
   });
 });
 
+// User add subscribed service route failure
+test('should fail to find user and return error', async () => {
+  return await axios.post(baseURL + '/users/-1/services')
+      .then((response) => {
+        expect(response.data)
+            .toEqual('No user found with userId: -1');
+      });
+});
+
 // User remove subscribed service route
 test('should remove specific service to user services', async () => {
-  await axios.delete('http://localhost:3001/users/0/services', {data: {serviceId: '0'}});
+  await axios.delete(baseURL + '/users/0/services', {data: {serviceId: '0'}});
   return usersModel.findOne({userId: 0}, function(err, userData) {
     if (err) {
       throw new Error();
@@ -120,6 +134,29 @@ test('should remove specific service to user services', async () => {
   });
 });
 
+// User remove subscribed service route failure
+test('should fail to find user and return error', async () => {
+  return await axios.delete(baseURL + '/users/-1/services')
+      .then((response) => {
+        expect(response.data)
+            .toEqual('No user found with userId: -1');
+      });
+});
+
+// All services route
+test('should retrieve a list of the user services', async () => {
+  return await axios.get(baseURL + '/services')
+      .then((response) => {
+        expect(response.data)
+            .toContainEqual(
+                {'_id': '6009e948515479572dd8d82e',
+                  'serviceId': '0',
+                  'name': 'TestService',
+                  'link': '/'});
+      });
+});
+
+// Teardown
 afterAll(() => {
   mongoose.connection.close();
 });
