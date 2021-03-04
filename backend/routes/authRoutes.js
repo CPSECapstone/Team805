@@ -1,36 +1,24 @@
 require('dotenv').config();
-
-const cookieParser = require('cookie-parser');
-const cors = require('cors');
 const express = require('express');
+const router = new express.Router();
 const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const cookieParser = require('cookie-parser');
 
 // Mongoose models
-const Users = require('./models/users');
+const usersModel = require('../models/users');
 
-// Database connection (ensure env variables are set for username/password)
-const db = 'mongodb+srv://' + process.env.dbuser + ':' + process.env.dbpass + '@cloudhaven.92yac.mongodb.net/CloudHaven?retryWrites=true&w=majority';
-mongoose.set('useFindAndModify', false);
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
-
-const app = express();
-app.use(express.json());
-app.use(cookieParser())
-app.use(cors({
-  origin: 'http://localhost:3000', // react app
-  credentials: true,
-}));
+router.use(cookieParser());
 
 let refreshTokens = [];
+let secure = false; //this should be true in production
 
 function generateAccessToken(payload) {
-  return jwt.sign(payload, process.env.ACCESS_PRIV_KEY, {expiresIn: '30s'});
+  return jwt.sign(payload, process.env.ACCESS_PRIV_KEY, {expiresIn: '60s'});
 }
 
 function generateRefreshToken(payload) {
-  const refreshToken = jwt.sign(payload, process.env.REFRESH_PRIV_KEY);
+  const refreshToken = jwt.sign(payload, process.env.REFRESH_PRIV_KEY, {expiresIn: '3600s'});
   refreshTokens.push(refreshToken);
   return refreshToken;
 }
@@ -41,13 +29,15 @@ function extractPayload(user) {
   }
 }
 
-app.delete('/logout', (req, res) => {
+// Route to logout
+router.delete('/logout', (req, res) => {
   refreshTokens = refreshTokens.filter(token => token !== req.body.refreshToken);
   res.sendStatus(204);
 })
 
-app.post('/login',  (req, res) => {
-  Users.findOne({username: req.body.username})
+// Route to login ~ recieve accessToken, refreshToken, and loggedIn cookie
+router.post('/login',  (req, res) => {
+  usersModel.findOne({username: req.body.username})
     .then((user) => {
       if (!user) {
         res.status(404).json({msg: "could not find user"});
@@ -62,14 +52,15 @@ app.post('/login',  (req, res) => {
             generateAccessToken(extractPayload(user)),
             {
               httpOnly: true,
-              secure: false
+              secure: secure
             })
           .cookie(
             'refreshToken',
             generateRefreshToken(extractPayload(user)),
             {
               httpOnly: true,
-              secure: false
+              path:'/token',
+              secure: secure
             })
           .cookie(
             'loggedIn', 'yup',
@@ -87,13 +78,18 @@ app.post('/login',  (req, res) => {
     .catch((err) => {console.log(err)});
 })
 
-app.post('/token', (req, res) => {
+// Route to refresh accessTokens
+router.post('/token', (req, res) => {
   let refreshToken = null;
   if (req && req.cookies) {
     refreshToken = req.cookies.refreshToken;
   }
-  if (refreshToken == null) return res.sendStatus(403);
-  if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
+  if (refreshToken == null)
+    return res.status(403).json({message: 'No refreshToken provided!'});
+  if (!refreshTokens.includes(refreshToken)) 
+    return res.status(403).json({message: 'Invalid refreshToken'});
+  if (refreshToken.exp*1000 <= new Date())
+    return res.status(403).json({message: 'refreshToken expired'});
   jwt.verify(refreshToken, process.env.REFRESH_PRIV_KEY, (err, user) => {
     if (err) return res.sendStatus(403);
     res.status(200).cookie(
@@ -101,10 +97,10 @@ app.post('/token', (req, res) => {
       generateAccessToken(extractPayload(user)),
       {
         httpOnly: true,
-        secure: false
+        secure: secure
       })
       .json({message: 'refreshed successfully'});
   })
 })
 
-app.listen(3002, () => console.log('Auth on 3002'));
+module.exports = router;

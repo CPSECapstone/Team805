@@ -6,13 +6,12 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import './Login.css';
 
-
 export const login = (username, password) => {
   if (!username || !password) {
     alert('username and password required!');
     return;
   }
-  axios.post('http://localhost:3002/login', {
+  axios.post('/login', {
     username: username,
     password: password,
   })

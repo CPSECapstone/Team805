@@ -47,7 +47,7 @@ class Registration extends Component {
 
   /** Sends registration information to DB  */
   async registerUser() {
-    axios.post('http://localhost:3001/register',
+    axios.post('/users/register',
         {
           username: this.state.username,
           email: this.state.email,

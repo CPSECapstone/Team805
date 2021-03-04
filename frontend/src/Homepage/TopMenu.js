@@ -185,7 +185,7 @@ export default function TopMenu() {
             should redirect to landing page */}
           <ListItem button onClick={ () => {
             deleteCookie('loggedIn');
-            axios.delete('http://localhost:3002/logout');
+            axios.delete('/logout');
           }}
           component={Link} to='/'>
             <ListItemIcon>

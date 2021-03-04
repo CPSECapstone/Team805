@@ -15,13 +15,13 @@ function createInterceptor() {
       });
 
   /**
-   * @return {Promise} - The AxiosPromise resolution:
-   *                        reject promise if token refresh failed
-   *                        retry the request if refresh succeeds.
+   * @return {Promise} - The AxiosPromise resolution,
+   * reject promise if token refresh failed
+   * retry the request if refresh succeeds.
    * @param {*} error - the unauthorized request
    */
   async function refreshToken(error) {
-    await axios.post('http://localhost:3002/token')
+    await axios.post('/token')
         .then((res) => {
           if (res.status != 200) {
             return Promise.reject(error);
