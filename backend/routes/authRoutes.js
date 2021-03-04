@@ -10,13 +10,16 @@ const usersModel = require('../models/users');
 let refreshTokens = []; // should use a mongoose model in the future
 
 router.use(cookieParser());
+// duration of access/refresh cookies in seconds
+let accessTime = 60;
+let refreshTime = 3600;
 
 function generateAccessToken(payload) {
-  return jwt.sign(payload, process.env.ACCESS_PRIV_KEY, {expiresIn: '60s'});
+  return jwt.sign(payload, process.env.ACCESS_PRIV_KEY, {expiresIn: accessTime.toString() + 's'});
 }
 
 function generateRefreshToken(payload) {
-  const refreshToken = jwt.sign(payload, process.env.REFRESH_PRIV_KEY, {expiresIn: '3600s'});
+  const refreshToken = jwt.sign(payload, process.env.REFRESH_PRIV_KEY, {expiresIn: refreshTime.toString() + 's'});
   refreshTokens.push(refreshToken);
   return refreshToken;
 }
@@ -50,7 +53,8 @@ router.post('/login',  (req, res) => {
             generateAccessToken(extractPayload(user)),
             {
               httpOnly: true,
-              secure: true
+              secure: true,
+              expires: new Date(Date.now() + accessTime * 1000)
             })
           .cookie(
             'refreshToken',
@@ -58,6 +62,7 @@ router.post('/login',  (req, res) => {
             {
               httpOnly: true,
               secure: true,
+              expires: new Date(Date.now() + refreshTime * 1000),
               path:'/token'
             })
           .json({message: 'logged in successfully'});
