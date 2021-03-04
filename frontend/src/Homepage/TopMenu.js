@@ -13,7 +13,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {Link} from 'react-router-dom';
-import {deleteCookie} from '../utils';
 
 import AccountBox from '@material-ui/icons/AccountBox';
 import ExitToApp from '@material-ui/icons/ExitToApp';
@@ -180,11 +179,8 @@ export default function TopMenu() {
             </ListItemIcon>
             <ListItemText primary='Marketplace'/>
           </ListItem>
-
-          {/* Signout deletes cookie, eventually
-            should redirect to landing page */}
           <ListItem button onClick={ () => {
-            deleteCookie('loggedIn');
+            localStorage.removeItem('loggedIn');
             axios.delete('/logout');
           }}
           component={Link} to='/'>

@@ -17,6 +17,7 @@ export const login = (username, password) => {
   })
       .then((res) => {
         if (res.status == 200) {
+          localStorage.setItem('loggedIn', 'yup');
           window.location.assign('/home');
         } else {
           console.log('login fail');

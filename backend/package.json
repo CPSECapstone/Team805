@@ -4,8 +4,7 @@
   "description": "Backend of CloudHaven",
   "main": "server.js",
   "scripts": {
-    "startApi": "nodemon server.js",
-    "startAuth": "nodemon authServer.js",
+    "start": "nodemon server.js",
     "test": "jest"
   },
   "author": "Team 805",

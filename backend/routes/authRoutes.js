@@ -7,11 +7,9 @@ const cookieParser = require('cookie-parser');
 
 // Mongoose models
 const usersModel = require('../models/users');
+let refreshTokens = []; // should use a mongoose model in the future
 
 router.use(cookieParser());
-
-let refreshTokens = [];
-let secure = false; //this should be true in production
 
 function generateAccessToken(payload) {
   return jwt.sign(payload, process.env.ACCESS_PRIV_KEY, {expiresIn: '60s'});
@@ -52,23 +50,16 @@ router.post('/login',  (req, res) => {
             generateAccessToken(extractPayload(user)),
             {
               httpOnly: true,
-              secure: secure
+              secure: true
             })
           .cookie(
             'refreshToken',
             generateRefreshToken(extractPayload(user)),
             {
               httpOnly: true,
-              path:'/token',
-              secure: secure
+              secure: true,
+              path:'/token'
             })
-          .cookie(
-            'loggedIn', 'yup',
-            {
-              httpOnly: false,
-              secure: false
-            }
-          )
           .json({message: 'logged in successfully'});
         } else {
           return res.status(404).json({message: 'Wrong password'});
@@ -97,7 +88,7 @@ router.post('/token', (req, res) => {
       generateAccessToken(extractPayload(user)),
       {
         httpOnly: true,
-        secure: secure
+        secure: true
       })
       .json({message: 'refreshed successfully'});
   })

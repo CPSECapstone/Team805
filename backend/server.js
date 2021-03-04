@@ -20,4 +20,4 @@ app.use(require('./routes/userRoutes'));
 app.use(require('./routes/serviceRoutes'));
 app.use(require('./routes/authRoutes'));
 
-app.listen(3001, () => console.log('Login API on port 3001'));
+app.listen(3001, () => console.log('API on port 3001'));
