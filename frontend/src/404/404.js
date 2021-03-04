@@ -1,26 +1,45 @@
-import React, {Component} from 'react';
-import './404.css';
-import {Box} from '@material-ui/core';
+import React from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+  box404: {
+    backgroundColor: 'beige',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    fontSize: '900%',
+    textAlign: 'center',
+  },
+  text404: {
+    margin: '0px',
+  },
+  subtext: {
+    marginTop: '0px',
+    fontSize: '20%',
+  },
+  homelink: {
+    color: '',
+    textDecoration: 'none',
+  },
+});
 
 /**
- * Represents the 404 Page for CloudHaven
+ * asdfas
+ *
+ * @export
+ * @return {*}
  */
-class _404 extends Component {
-  /**
-   * Renders homepage
-   * @return {div} - Returns the homepage components
-   */
-  render() {
-    return (
-      <div className="">
-        <div>
-          <Box >
-            404
-          </Box>
-        </div>
+export default function Page404() {
+  const classes = useStyles();
+  return (
+    <div className={classes.box404}>
+      <div>
+        <p className={classes.text404}>404</p>
+        <p className={classes.subtext}>You tried accessing an invalid page!
+          <a href="/" className={classes.homelink}> Click Here</a> to go home.
+        </p>
       </div>
-    );
-  }
+    </div>
+  );
 };
-
-export default _404;
