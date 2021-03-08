@@ -14,6 +14,13 @@ describe('Visits invalid page, checks for 404', () => {
   });
 });
 
+describe('Checks to see if 404 page home link works', () => {
+  it('Visits the 404 page and clicks on home link', () => {
+    cy.visit('http://localhost:3000/404');
+    cy.contains('Click Here').click();
+    cy.url().should('eq', 'http://localhost:3000/');
+  });
+});
 
 describe('Does logging in work', () => {
   it('Doing all login stuff', () => {

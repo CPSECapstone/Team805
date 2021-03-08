@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    fontSize: '900%',
+    fontSize: '700%',
     textAlign: 'center',
   },
   text404: {
@@ -25,10 +25,10 @@ const useStyles = makeStyles({
 });
 
 /**
- * asdfas
+ * 404 Page for CloudHaven. Invalid routes will render this page.
  *
  * @export
- * @return {*}
+ * @return {*} React Component for 404 Page
  */
 export default function Page404() {
   const classes = useStyles();
