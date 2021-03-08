@@ -30,8 +30,7 @@ class App extends Component {
           component={Registration}/>
         <PrivateRoute path='/market'
           component={VendorMarketplace}/>
-        <PrivateRoute restricted={true}
-          exact path='/profile' component = {Profile}/>
+        <PrivateRoute exact path='/profile' component = {Profile}/>
       </BrowserRouter>
     );
   }

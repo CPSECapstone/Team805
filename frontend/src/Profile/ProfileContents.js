@@ -14,8 +14,8 @@ const useStyles = (theme) => ({
   },
   cardStyle: {
     display: 'block',
-    width: '50vw',
-    height: '50vw',
+    width: '40vw',
+    height: '40vw',
   },
   cardItems: {
     paddingTop: 25,
@@ -45,7 +45,10 @@ class ProfileContents extends Component {
    */
   static get propTypes() {
     return {
-      classes: PropTypes.any,
+      classes: PropTypes.shape({
+        cardItems: PropTypes.style,
+        cardStyle: PropTypes.style,
+        large: PropTypes.style}),
     };
   }
   /**
@@ -80,7 +83,7 @@ class ProfileContents extends Component {
           justify="center"
           style={{minHeight: '50vh'}}
         >
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <Card className={classes.cardStyle}>
               <div className={classes.cardItems}>
                 <Avatar className={classes.large}>T</Avatar>
