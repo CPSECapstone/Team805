@@ -7,6 +7,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+// Mongoose models
+const usersModel = require('./models/users');
+const servicesModel = require('./models/services');
+
 // Database connection (ensure env variables are set for username/password)
 const dbuser = process.env.dbuser;
 const dbpass = process.env.dbpass;
