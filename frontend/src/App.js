@@ -9,6 +9,8 @@ import PrivateRoute from './CustomRoutes/PrivateRoute';
 import PublicRoute from './CustomRoutes/PublicRoute';
 import Landing from './Homepage/Landing';
 import VendorMarketplace from './VendorMarketplace/VendorMarketplace';
+
+import Profile from './Profile/Profile';
 import _404 from './404/404';
 
 /** Main App Component */
@@ -31,6 +33,7 @@ class App extends Component {
             component={Registration}/>
           <PrivateRoute path='/market'
             component={VendorMarketplace}/>
+          <PrivateRoute exact path='/profile' component = {Profile}/>
           <PublicRoute restricted={false} path='/404' component = {_404}/>
           <Redirect to='/404' />
         </Switch>

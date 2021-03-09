@@ -166,7 +166,7 @@ export default function TopMenu() {
             <ListItemText primary='Log In'/>
           </ListItem>
 
-          <ListItem button>
+          <ListItem button component={Link} to='/profile'>
             <ListItemIcon>
               <AccountBox/>
             </ListItemIcon>

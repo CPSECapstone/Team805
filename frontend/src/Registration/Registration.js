@@ -82,6 +82,7 @@ class Registration extends Component {
           <h2>CloudHaven Registration</h2>
         </Container>
         <TextField
+          id="username"
           variant="outlined"
           margin="normal"
           required
@@ -91,6 +92,7 @@ class Registration extends Component {
           onChange={this.handleChange}
         />
         <TextField
+          id="email"
           variant="outlined"
           margin="normal"
           required
@@ -102,6 +104,7 @@ class Registration extends Component {
           onChange={this.handleChange}
         />
         <TextField
+          id="password"
           variant="outlined"
           margin="normal"
           required
@@ -115,6 +118,7 @@ class Registration extends Component {
           onChange={this.handleChange}
         />
         <TextField
+          id="cpassword"
           variant="outlined"
           margin="normal"
           required
