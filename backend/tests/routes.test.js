@@ -4,6 +4,9 @@
 const axios = require('axios');
 const mongoose = require('mongoose');
 const usersModel = require('../models/users');
+const testUser = 'test';
+const testPass = 'test';
+const testUserId = '603566d77a0a7528b8742489';
 
 // Setup
 const baseURL = 'http://localhost:3001';
@@ -11,12 +14,12 @@ beforeAll(async () => {
   const dbuser = process.env.dbuser;
   const dbpass = process.env.dbpass;
   mongoose.set('useFindAndModify', false);
-  await mongoose.connect('mongodb+srv://' + dbuser + ':' + dbpass + '@cloudhaven.92yac.mongodb.net/CloudHaven?retryWrites=true&w=majority', {useNewUrlParser: true});
+  await mongoose.connect('mongodb+srv://' + dbuser + ':' + dbpass + '@cloudhaven.92yac.mongodb.net/CloudHaven?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 });
 
 // Full user data route
 test('should retrieve relevant user data', async () => {
-  return await axios.get(baseURL + '/users/0')
+  return await axios.get(baseURL + '/users/0/all')
       .then((response) => {
         expect(response.data)
             .toStrictEqual({email: 'testuser@gmail.com', username: 'testuser'});
@@ -25,7 +28,7 @@ test('should retrieve relevant user data', async () => {
 
 // Full user data route failure
 test('should fail to find user and return error', async () => {
-  return await axios.get(baseURL + '/users/-1')
+  return await axios.get(baseURL + '/users/-1/all')
       .then((response) => {
         expect(response.data)
             .toEqual('No user found with userId: -1');
@@ -70,7 +73,10 @@ test('should fail to find user and return error', async () => {
 
 // User subscribed services route
 test('should retrieve user subscribed services', async () => {
-  return await axios.get(baseURL + '/users/0/services')
+  const response = await axios.post(baseURL + '/login',
+      {username: testUser, password: testPass});
+  axios.defaults.headers.cookie = response.headers['set-cookie'];
+  return await axios.get(baseURL + '/users/services')
       .then((response) => {
         expect(response.data)
             .toEqual([
@@ -94,17 +100,18 @@ test('should retrieve user subscribed services', async () => {
 
 // User subscribed services route failure
 test('should fail to find user and return error', async () => {
-  return await axios.get(baseURL + '/users/-1/services')
-      .then((response) => {
-        expect(response.data)
-            .toEqual('No user found with userId: -1');
-      });
+  axios.defaults.headers.cookie = null;
+  return await axios.get(baseURL + '/users/services')
+      .catch((err) => expect(err.response.status).toEqual(401));
 });
 
 // User add subscribed service route
 test('should add specific service to user services', async () => {
-  await axios.post(baseURL + '/users/0/services', {serviceId: '0'});
-  return usersModel.findOne({userId: 0}, function(err, userData) {
+  const response = await axios.post(baseURL + '/login',
+      {username: testUser, password: testPass});
+  axios.defaults.headers.cookie = response.headers['set-cookie'];
+  await axios.post(baseURL + '/users/services', {serviceId: '0'});
+  return usersModel.findOne({_id: testUserId}, function(err, userData) {
     if (err) {
       throw new Error();
     } else {
@@ -115,17 +122,18 @@ test('should add specific service to user services', async () => {
 
 // User add subscribed service route failure
 test('should fail to find user and return error', async () => {
-  return await axios.post(baseURL + '/users/-1/services')
-      .then((response) => {
-        expect(response.data)
-            .toEqual('No user found with userId: -1');
-      });
+  axios.defaults.headers.cookie = null;
+  return await axios.post(baseURL + '/users/services')
+      .catch((err) => expect(err.response.status).toEqual(401));
 });
 
 // User remove subscribed service route
 test('should remove specific service to user services', async () => {
-  await axios.delete(baseURL + '/users/0/services', {data: {serviceId: '0'}});
-  return usersModel.findOne({userId: 0}, function(err, userData) {
+  const response = await axios.post(baseURL + '/login',
+      {username: testUser, password: testPass});
+  axios.defaults.headers.cookie = response.headers['set-cookie'];
+  await axios.delete(baseURL + '/users/services', {data: {serviceId: '0'}});
+  return usersModel.findOne({_id: testUserId}, function(err, userData) {
     if (err) {
       throw new Error();
     } else {
@@ -136,11 +144,9 @@ test('should remove specific service to user services', async () => {
 
 // User remove subscribed service route failure
 test('should fail to find user and return error', async () => {
-  return await axios.delete(baseURL + '/users/-1/services')
-      .then((response) => {
-        expect(response.data)
-            .toEqual('No user found with userId: -1');
-      });
+  axios.defaults.headers.cookie = null;
+  return await axios.delete(baseURL + '/users/services')
+      .catch((err) => expect(err.response.status).toEqual(401));
 });
 
 // All services route

@@ -10,7 +10,7 @@ const servicesModel = require('./models/services');
 // Database connection (ensure env variables are set for username/password)
 const db = 'mongodb+srv://' + process.env.dbuser + ':' + process.env.dbpass + '@cloudhaven.92yac.mongodb.net/CloudHaven?retryWrites=true&w=majority';
 mongoose.set('useFindAndModify', false);
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(db, {useNewUrlParser: true, useUnifiedTopology: true});
 
 // Middleware
 const app = express();

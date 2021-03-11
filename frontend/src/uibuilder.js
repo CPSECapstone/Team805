@@ -7,8 +7,6 @@ const loginPost = async (userToken, passToken) => {
         password: passToken,
       })
       .then((response) => {
-        console.log(response.status);
-        console.log('User ' + userToken + ' successfully logged in.');
         return response.status;
       })
       .catch((err) => {

@@ -1,7 +1,11 @@
 import axios from 'axios';
+// This makes axios send stored cookies by default in every request
 axios.defaults.withCredentials = true;
+
 /**
- *
+ * After every request this intercepts the response.
+ * Upon requests that fail due to an expired accessToken,
+ * refresh the accessToken and retry the request.
  */
 function createInterceptor() {
   const interceptor = axios.interceptors.response.use(
