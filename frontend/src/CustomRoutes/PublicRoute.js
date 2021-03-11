@@ -1,13 +1,12 @@
 
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
-import {isLogin} from '../utils';
 import PropTypes from 'prop-types';
 
 const PublicRoute = ({component: Component, restricted, ...rest}) => {
   return (
     <Route {...rest} render={ (props) => (
-          isLogin() && restricted ?
+          localStorage.getItem('loggedIn') && restricted ?
             <Redirect to='/home' /> :
               <Component {...props} />
     )} />

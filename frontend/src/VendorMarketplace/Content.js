@@ -39,7 +39,7 @@ export default function Content(props) {
     if (!userServices.includes(serviceId)) {
       setUserServices([...userServices, serviceId]);
       try {
-        await axios.post('/users/0/services', {serviceId: serviceId});
+        await axios.post('/users/services', {serviceId: serviceId});
       } catch (error) {
         console.log(error);
       }
@@ -53,7 +53,7 @@ export default function Content(props) {
     async function fetchServices() {
       try {
         const serviceResponse = await axios.get('/services');
-        const userResponse = await axios.get('users/0/services');
+        const userResponse = await axios.get('users/services');
         setServices(serviceResponse.data);
         setUserServices(userResponse.data.map((service) => service.serviceId));
       } catch (error) {

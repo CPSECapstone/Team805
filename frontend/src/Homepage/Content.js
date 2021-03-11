@@ -40,7 +40,7 @@ export default function Content() {
      */
     async function fetchUserServices() {
       try {
-        const response = await axios.get('/users/0/services');
+        const response = await axios.get('/users/services');
         setServices(response.data);
       } catch (error) {
         console.log(error);
@@ -53,7 +53,7 @@ export default function Content() {
   const removeUserService = async (serviceId) => {
     setServices(services.filter((service) => service.serviceId !== serviceId));
     try {
-      await axios.delete('/users/0/services', {data: {serviceId: serviceId}});
+      await axios.delete('/users/services', {data: {serviceId: serviceId}});
     } catch (error) {
       console.log(error);
     }
