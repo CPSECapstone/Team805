@@ -3,10 +3,6 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-// Mongoose models
-const usersModel = require('./models/users');
-const servicesModel = require('./models/services');
-
 // Database connection (ensure env variables are set for username/password)
 const db = 'mongodb+srv://' + process.env.dbuser + ':' + process.env.dbpass + '@cloudhaven.92yac.mongodb.net/CloudHaven?retryWrites=true&w=majority';
 mongoose.set('useFindAndModify', false);
