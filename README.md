@@ -12,11 +12,22 @@ Over the course of the quarter we have worked up to validating the following sce
 ## Setup:
 `git clone https://github.com/CPSECapstone/Team805.git`
 
+at this point, you will need to set up a .env file in backend/. See the 'Env' Section for what variables you need.
+
 Run `npm install` in /backend, /vendor, and /frontend to install npm dependencies
 
 `cd vendor` and `node api.js` to start mock vendor api
 
 `cd ../frontend` and `npm start` to run frontend
+
+`cd ../backend` and `npm start` to run backend
+
+## Env:
+A .env file in /backend is required to store secrets. The variables you must include are:  
+**ACCESS_PRIV_KEY**=access token secret, should be a generated string of at least 60 characters  
+**REFRESH_PRIV_KEY**=refresh token secret, should be a generated string of at least 60 characters  
+**dbUser**=mongoDb username  
+**dbPass**=mongoDb password  
 
 ## Continuous Integration:
 Link to TravisCI:
