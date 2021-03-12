@@ -11,10 +11,13 @@ export VENDOR_PID=$!
 cd ../backend
 node server.js &
 export BACKEND_PID=$!
+cd ../frontend
+npm start &
+export FRONTEND_PID=$!
 
 cd ../backend
 npm run test
-if [ $? -ne 0] 
+if [ $? -ne 0 ] 
 then
     exit $?
 fi
@@ -25,3 +28,4 @@ npm run cy:run
 
 kill $VENDOR_PID
 kill $BACKEND_PID
+kill $FRONTEND_PID
