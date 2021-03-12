@@ -12,13 +12,13 @@ cd ../backend
 node server.js &
 export BACKEND_PID=$!
 
-sleep 3
-
 cd ../backend
 npm run test
 if [ $? -ne 0] 
 then
+    echo $?
     exit $?
+fi
 
 cd ../frontend
 npm test -- --watchAll=false
