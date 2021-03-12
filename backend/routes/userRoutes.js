@@ -12,7 +12,7 @@ router.use(bodyParser.urlencoded({extended: true}));
 router.use(cookieParser());
 router.use(passport.initialize());
 
-// Related mongoose models
+// Mongoose models
 const UsersModel = require('../models/users');
 const servicesModel = require('../models/services');
 
