@@ -1,3 +1,5 @@
+exit 1
+
 cd vendor
 npm install
 cd ../backend
