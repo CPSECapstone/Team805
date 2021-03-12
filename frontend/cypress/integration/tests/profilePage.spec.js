@@ -10,7 +10,7 @@ describe('Profile page test', () => {
     cy.contains('Profile').click();
     cy.url().should('include', '/profile');
     // verify email is pulled
-    cy.get('p').should('contain', 'myusername@gmail.com');
+    cy.get('p').should('contain', 'myemail@gmail.com');
     // verify username is pulled
     cy.get('p').should('contain', 'myusername');
   });
