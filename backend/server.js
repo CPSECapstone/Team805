@@ -24,4 +24,6 @@ app.use(require('./routes/userRoutes'));
 app.use(require('./routes/serviceRoutes'));
 app.use(require('./routes/authRoutes'));
 
+console.log('Backend PreListen');
+
 app.listen(3001, () => console.log('API on port 3001'));
