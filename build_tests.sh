@@ -12,6 +12,8 @@ cd ../backend
 node server.js &
 export BACKEND_PID=$!
 
+sleep 3
+
 cd ../backend
 npm run test
 if [ $? -ne 0] 
