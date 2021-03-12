@@ -55,7 +55,7 @@ class ProfileContents extends Component {
    * Returns data from the db. Should later use the profile route
    */
   componentDidMount() {
-    axios.get('/users/0/all')
+    axios.get('/users/1/all')
         .then((response) => {
           this.setState({
             username: response.data.username,
