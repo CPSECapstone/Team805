@@ -19,6 +19,7 @@ cd ../backend
 npm run test
 if [ $? -ne 0 ] 
 then
+    echo $?
     exit $?
 fi
 
@@ -26,11 +27,13 @@ cd ../frontend
 npm test -- --watchAll=false
 if [ $? -ne 0 ] 
 then
+    echo $?
     exit $?
 fi
 npm run cy:run
 if [ $? -ne 0 ] 
 then
+    echo $?
     exit $?
 fi
 
