@@ -24,7 +24,15 @@ fi
 
 cd ../frontend
 npm test -- --watchAll=false
+if [ $? -ne 0 ] 
+then
+    exit $?
+fi
 npm run cy:run
+if [ $? -ne 0 ] 
+then
+    exit $?
+fi
 
 kill $VENDOR_PID
 kill $BACKEND_PID
