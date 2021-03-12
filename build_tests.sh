@@ -17,7 +17,6 @@ export FRONTEND_PID=$!
 
 cd ../backend
 npm run test
-echo $?
 if [ $? -ne 0 ] 
 then
     exit $?
