@@ -1,5 +1,3 @@
-exit 1
-
 cd vendor
 npm install
 cd ../backend
@@ -21,19 +19,19 @@ cd ../backend
 npm run test
 if [ $? -ne 0 ] 
 then
-    exit $?
+    exit 1
 fi
 
 cd ../frontend
 npm test -- --watchAll=false
 if [ $? -ne 0 ] 
 then
-    exit $?
+    exit 1
 fi
 npm run cy:run
 if [ $? -ne 0 ] 
 then
-    exit $?
+    exit 1
 fi
 
 kill $VENDOR_PID
