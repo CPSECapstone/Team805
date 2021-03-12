@@ -5,7 +5,8 @@ branches:
   only:
   - main
 script:
-- chmod +x build_tests.sh && bash ./build_tests.sh
+- chmod +x build_tests.sh
+- bash ./build_tests.sh
 env:
   global:
   - secure: pnBz9ECkTmP/9KXwO3oPpAYRugoK3KVUqv2Sp+qbr2uZ7FR5XTK/5FL0By1rvP46OWOdYB6Xr99rUsYGZV6ag9axM1mOPCU4p/0Ie7S/n8Do2ZhkgWUVFSNP+shC2F/yLvj/IxUQo1z+8sFsrmw6fyT0FC0g2Gzs/Ve2qbGQ0An2Bh6ShzMYajZ1ukiE3qfJAGwEqvq9RrUydoR7fY71KvAuOYEGXtW26VQBEBzshiOm8yeEu/grRa1km7BtWeMxVfhfyhpmGR9v5xYJ3f/PQT6ZkR3cqFISxDCdD1MoUNBigCixk5rPUEfaDytFb6K6PN1rLIpjIUvv0Lt+LYuw+mSIcmb84U6yTEh+siaVuvyLeDXNaGGcuL8zufVO7PWMXBEBBLACTK+STPdYIRborD3CN4NLr82+oRdeKtqzc7AKZ3CyXKFrn1mLpA93t7Rd7+Ya8SWJrKGU0bMLetZh9dwnVmoEWRHO5jR9TpQJ3gVccJlrIoU048th17WxMltz0l0fuVs6kwy+z08pxdqZ8iP774+gIeHrI0bSCbhmd2YDyGzF6Ms9xB4h+zmaUjXFv6I2EaZlJ+H4krCca9q9LRy8fJpOYb8aLv7PPsjaF8nsAeHMSnUjkhD1E6bt9g1buNnDvWHNtGpra40QHSWA2FKFuJ+j1hd4qZQvHeFzzfk=
