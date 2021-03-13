@@ -3,6 +3,7 @@ import {Link, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {TextField, Button, Container} from '@material-ui/core';
 import bcrypt from 'bcryptjs';
+import Axios from axios;
 
 /** Class Component for Registration Page */
 class Registration extends Component {
@@ -150,6 +151,20 @@ class Registration extends Component {
 
 Registration.propTypes = {
   showLanding: PropTypes.func,
+};
+
+
+const register = () => {
+  Axios({
+    method: "POST",
+    data: {
+      username: registerUsername,
+      password: registerPassword,
+      email: registerEmail
+    },
+    withCredentials: true,
+    url: "http://localhost:3001/register",
+  }).then((res) => console.log(res));
 };
 
 export default withRouter(Registration);

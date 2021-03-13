@@ -31,15 +31,16 @@ app.use(cors({
 
 app.use(session({
   // temp secret, will be changed and moved to env file
-  secret: 'foobar',
-  resave: false,
-  saveUninitialized: false,
+  secret: 'secretCode',
+  resave: true,
+  saveUninitialized: true,
 }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+//app.use(cookieParser("secretCode"));
 
-const users = [
+/* const users = [
   {
     id: 1,
     name: 'John Smith',
@@ -48,7 +49,7 @@ const users = [
     // hashed pwd for 'password!' ^^^^^^
     email: 'email@gmail.com',
   },
-];
+]; */ 
 
 const getUserByUsername = (username) => users.find(
     (user) => user.username === username);
@@ -75,19 +76,39 @@ app.post(
             console.log(req.body);
             try {
               if (err || !user) {
-                const error = new Error('An error occured');
+                const error = new Error('User not found');
                 return next(error);
               }
             } catch (error) {
               return next(error);
             }
-            console.log('sending login sucess');
-            // change what gets sent here
-            // if you want to send more info to client
+            req.logIn(user, (err) => {
+              if (err) throw err;
+              res.send("User successfully authenticated");
+              console.log(req.user);
+            });
             return res.json({status: 'success'});
           },
       )(req, res, next);
     },
 );
+app.post('/register', (req, res) => {
+
+  User.findOne({ username: req.body.username }, async (err, doc) => {
+    if (err) throw err;
+    if (doc) res.send("User Already Exists");
+    if (!doc) {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+      const newUser = new User({
+        username: req.body.username,
+        password: hashedPassword,
+        email: req.body.email
+      });
+      await newUser.save();
+      res.send("User Created");
+    }
+  });
+});
 
 app.listen(3001, () => console.log('Login API on port 3001'));
