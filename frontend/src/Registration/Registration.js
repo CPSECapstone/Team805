@@ -51,7 +51,7 @@ class Registration extends Component {
         {
           username: this.state.username,
           email: this.state.email,
-          password: this.state.username,
+          password: this.state.password,
         })
         .then((res) => {
           if (res.status == 200) {
