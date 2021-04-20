@@ -26,8 +26,8 @@ describe('Does logging in work', () => {
   it('Doing all login stuff', () => {
     cy.visit('http://localhost:3000/');
     cy.contains('Login').click();
-    cy.get('#username').type('user1');
-    cy.get('#password').type('password!');
+    cy.get('#username').type('myusername');
+    cy.get('#password').type('mypassword');
     cy.contains('Sign In').click();
   });
 });
