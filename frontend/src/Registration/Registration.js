@@ -20,6 +20,7 @@ class Registration extends Component {
       confirmPassword: '',
       passwordError: null,
       emailError: null,
+      usernameError: null,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -47,6 +48,7 @@ class Registration extends Component {
 
   /** Sends registration information to DB  */
   async registerUser() {
+    this.setState({usernameError: null});
     axios.post('/users/register',
         {
           username: this.state.username,
@@ -60,7 +62,10 @@ class Registration extends Component {
             console.log('registration fail');
           }
         })
-        .catch((err) => console.log('error in logging in', err));
+        .catch((err) => {
+          console.log('error in logging in', err);
+          this.setState({usernameError: 'Username already in use'});
+        });
   }
 
   /** Checks to make sure passwords match
@@ -101,6 +106,9 @@ class Registration extends Component {
           fullWidth
           name="username"
           label="Username"
+          error={this.state.usernameError ? true : false}
+          helperText={this.state.usernameError ?
+            this.state.usernameError : null}
           onChange={this.handleChange}
         />
         <TextField
