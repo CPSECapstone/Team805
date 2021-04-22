@@ -1,6 +1,7 @@
 /**
  * @jest-environment node
  */
+require('dotenv').config();
 const axios = require('axios');
 const mongoose = require('mongoose');
 const usersModel = require('../models/users');
