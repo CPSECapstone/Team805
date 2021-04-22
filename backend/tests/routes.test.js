@@ -91,9 +91,9 @@ test('should retrieve user subscribed services', async () => {
                 'name': 'Sample Flow',
                 'link': 'sampleflow',
                 'isFavorite': false},
-              {'_id': '602da05bc4d296ff91c864ce',
-                'serviceId': '5',
-                'name': 'Google Docs',
+              {'_id': '602da039c4d296ff91c864cd',
+                'serviceId': '4',
+                'name': 'Google Sheets',
                 'link': '/',
                 'isFavorite': false}]);
       });
