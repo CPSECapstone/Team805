@@ -1,4 +1,5 @@
-## Welcome to GitHub Pages
+## CSC 406 Spring 2021 - Team 805
+### Adrien Chaussabel, Caoimhe Gallahue, Miko Krajewski, Nathan Palmiero, Jason Shotts
 
 You can use the [editor on GitHub](https://github.com/CPSECapstone/Team805/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
