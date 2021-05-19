@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import './Login.css';
 
-export const login = (username, password) => {
+export const login = (username, password, stateSetter) => {
   if (!username || !password) {
     alert('username and password required!');
     return;
@@ -23,7 +23,7 @@ export const login = (username, password) => {
           console.log('login fail');
         }
       })
-      .catch((err) => console.log('error logging in', err));
+      .catch((err) => stateSetter(true));
 };
 
 /**
@@ -34,33 +34,6 @@ const Login = () => {
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
-  /**
-   * Nested login function so that I can change the errorMessage state
-   * of this component
-   *
-   * @param {*} username Username that will be checked for verification
-   * @param {*} password Password that will be checked for verification
-   */
-  const nestedLogin = (username, password) => {
-    if (!username || !password) {
-      alert('username and password required!');
-      return;
-    }
-    axios.post('/login', {
-      username: username,
-      password: password,
-    })
-        .then((res) => {
-          if (res.status == 200) {
-            localStorage.setItem('loggedIn', 'yup');
-            window.location.assign('/home');
-          } else {
-            console.log('login fail');
-          }
-        })
-        .catch((err) => setErrorMessage('Foo'));
-  };
 
   return (
     <Container component='div' maxWidth='xs'>
@@ -109,7 +82,8 @@ const Login = () => {
           fullWidth
           variant="contained"
           color="primary"
-          onClick={() => nestedLogin(loginUsername, loginPassword)}>
+          onClick={()=>
+            login(loginUsername, loginPassword, setErrorMessage)}>
           Sign In
         </Button>
         <p className="message">
