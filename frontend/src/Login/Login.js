@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import './Login.css';
 
-export const login = (username, password) => {
+export const login = (username, password, stateSetter) => {
   if (!username || !password) {
     alert('username and password required!');
     return;
@@ -23,7 +23,7 @@ export const login = (username, password) => {
           console.log('login fail');
         }
       })
-      .catch((err) => console.log('error logging in', err));
+      .catch((err) => stateSetter(true));
 };
 
 /**
@@ -33,13 +33,27 @@ export const login = (username, password) => {
 const Login = () => {
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   return (
     <Container component='div' maxWidth='xs'>
       <Container component='div' maxWidth='sm'>
         <h2 className = 'Title'>CloudHaven Login</h2>
       </Container>
-      <form className= 'LoginForm'>
+      <form className= 'LoginForm' onSubmit= {login}>
+        {errorMessage ?
+        <TextField
+          error
+          helperText = "Incorrect username or password."
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="username"
+          label="Username"
+          name="username"
+          autoComplete="user"
+          onChange={(e) => setLoginUsername(e.target.value)}/> :
         <TextField
           variant="outlined"
           margin="normal"
@@ -51,6 +65,7 @@ const Login = () => {
           autoComplete="user"
           onChange={(e) => setLoginUsername(e.target.value)}
         />
+        }
         <TextField
           variant="outlined"
           margin="normal"
@@ -67,7 +82,8 @@ const Login = () => {
           fullWidth
           variant="contained"
           color="primary"
-          onClick={() => login(loginUsername, loginPassword)}>
+          onClick={()=>
+            login(loginUsername, loginPassword, setErrorMessage)}>
           Sign In
         </Button>
         <p className="message">
